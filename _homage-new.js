@@ -877,7 +877,7 @@ function setup() {
   // console.log(smD, width)
 
   aspRatio = 16/9;
-	smD = (windowWidth * aspRatio) < windowHeight ? windowWidth : windowHeight / aspRatio ; 
+	smD = (windowWidth * aspRatio) < windowHeight ? windowWidth : windowHeight / aspRatio ; ``
 
 	createCanvas(smD, smD*aspRatio);
 

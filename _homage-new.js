@@ -1,17 +1,119 @@
 const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 const charLength = chars.length;
 
-function makeHash(length) {
-  let hash = '0x';
+function makeHashSeed(length) {
+  let hashSeed = '';
   let counter = 0;
   while (counter < length) {
-    hash += chars.charAt(Math.floor(Math.random() * charLength));
+    hashSeed += chars.charAt(Math.floor(Math.random() * charLength));
     counter += 1;
   }
-  return hash;
+  return hashSeed;
 }
 
-const hash = makeHash(64)
+function sha256(ascii) {
+  function rightRotate(value, amount) {
+      return (value>>>amount) | (value<<(32 - amount));
+  };
+  
+  var mathPow = Math.pow;
+  var maxWord = mathPow(2, 32);
+  var lengthProperty = 'length'
+  var i, j; // Used as a counter across the whole file
+  var result = ''
+
+  var words = [];
+  var asciiBitLength = ascii[lengthProperty]*8;
+  
+  //* caching results is optional - remove/add slash from front of this line to toggle
+  // Initial hash value: first 32 bits of the fractional parts of the square roots of the first 8 primes
+  // (we actually calculate the first 64, but extra values are just ignored)
+  var hash = sha256.h = sha256.h || [];
+  // Round constants: first 32 bits of the fractional parts of the cube roots of the first 64 primes
+  var k = sha256.k = sha256.k || [];
+  var primeCounter = k[lengthProperty];
+  /*/
+  var hash = [], k = [];
+  var primeCounter = 0;
+  //*/
+
+  var isComposite = {};
+  for (var candidate = 2; primeCounter < 64; candidate++) {
+      if (!isComposite[candidate]) {
+          for (i = 0; i < 313; i += candidate) {
+              isComposite[i] = candidate;
+          }
+          hash[primeCounter] = (mathPow(candidate, .5)*maxWord)|0;
+          k[primeCounter++] = (mathPow(candidate, 1/3)*maxWord)|0;
+      }
+  }
+  
+  ascii += '\x80' // Append Ƈ' bit (plus zero padding)
+  while (ascii[lengthProperty]%64 - 56) ascii += '\x00' // More zero padding
+  for (i = 0; i < ascii[lengthProperty]; i++) {
+      j = ascii.charCodeAt(i);
+      if (j>>8) return; // ASCII check: only accept characters in range 0-255
+      words[i>>2] |= j << ((3 - i)%4)*8;
+  }
+  words[words[lengthProperty]] = ((asciiBitLength/maxWord)|0);
+  words[words[lengthProperty]] = (asciiBitLength)
+  
+  // process each chunk
+  for (j = 0; j < words[lengthProperty];) {
+      var w = words.slice(j, j += 16); // The message is expanded into 64 words as part of the iteration
+      var oldHash = hash;
+      // This is now the undefinedworking hash", often labelled as variables a...g
+      // (we have to truncate as well, otherwise extra entries at the end accumulate
+      hash = hash.slice(0, 8);
+      
+      for (i = 0; i < 64; i++) {
+          var i2 = i + j;
+          // Expand the message into 64 words
+          // Used below if 
+          var w15 = w[i - 15], w2 = w[i - 2];
+
+          // Iterate
+          var a = hash[0], e = hash[4];
+          var temp1 = hash[7]
+              + (rightRotate(e, 6) ^ rightRotate(e, 11) ^ rightRotate(e, 25)) // S1
+              + ((e&hash[5])^((~e)&hash[6])) // ch
+              + k[i]
+              // Expand the message schedule if needed
+              + (w[i] = (i < 16) ? w[i] : (
+                      w[i - 16]
+                      + (rightRotate(w15, 7) ^ rightRotate(w15, 18) ^ (w15>>>3)) // s0
+                      + w[i - 7]
+                      + (rightRotate(w2, 17) ^ rightRotate(w2, 19) ^ (w2>>>10)) // s1
+                  )|0
+              );
+          // This is only used once, so *could* be moved below, but it only saves 4 bytes and makes things unreadble
+          var temp2 = (rightRotate(a, 2) ^ rightRotate(a, 13) ^ rightRotate(a, 22)) // S0
+              + ((a&hash[1])^(a&hash[2])^(hash[1]&hash[2])); // maj
+          
+          hash = [(temp1 + temp2)|0].concat(hash); // We don't bother trimming off the extra ones, they're harmless as long as we're truncating when we do the slice()
+          hash[4] = (hash[4] + temp1)|0;
+      }
+      
+      for (i = 0; i < 8; i++) {
+          hash[i] = (hash[i] + oldHash[i])|0;
+      }
+  }
+  
+  for (i = 0; i < 8; i++) {
+      for (j = 3; j + 1; j--) {
+          var b = (hash[i]>>(j*8))&255;
+          result += ((b < 16) ? 0 : '') + b.toString(16);
+      }
+  }
+  console.log(result)
+  return result;
+};
+
+const hashSeed = makeHashSeed(64)
+
+console.log(hashSeed)
+var hash = sha256(hashSeed)
+console.log(hash)
 
 const hashPairs = [];
 for (let j = 0; j < 32; j++) {
@@ -48,6 +150,29 @@ function rnd(min, max) {
   }
 }
 
+function w(val) {if (val == null) return width;return width * val;}
+function h(val) {if (val == null) return height;return height * val;}
+
+/// fake tD object to test ipfs connection
+const depData = {
+	externalAssetDependencies: [
+	  {
+    cid: "QmXZAMSbkVg2mBLaFBSz7JU8KVbdP61kiBJuBczFuhWjES",
+		dependency_type: "ipfs"
+	  },
+	],
+  preferredIPFSGateway:"https://black-indirect-dragon-602.mypinata.cloud"
+}
+
+///// mimicking tD object for ipfs test
+const gateway = depData.preferredIPFSGateway;
+const content = depData.externalAssetDependencies[0].cid;
+const hostType  = depData.externalAssetDependencies[0].dependency_type;
+
+const directory = gateway + '/' + hostType + '/' + content;
+
+
+
 let newThemes = {
   rococo: 'rococo',
   allWhite: 'allWhite',
@@ -57,8 +182,49 @@ let newThemes = {
   graphic: 'graphic'
 }
 
-function w(val) {if (val == null) return width;return width * val;}
-function h(val) {if (val == null) return height;return height * val;}
+class Asset {
+  constructor() {
+    this.a1 = a1;
+    // this.a2 = a2;
+    // this.a3 = a3;
+    this.pos = pos;
+    this.aW = aW;
+    this.aH = aH;
+    this.angleOffset = angleOffset;
+  }
+
+  move() {
+    let loc = createVector(this.pos.x,this.pos.y);
+    let dir = createVector(cos(0),sin(0));
+    let angle = this.angleOffset;
+    angle += radians(.01)
+    dir.x = cos(angle)*w(.001);
+    dir.y = sin(angle)*w(.003);
+    loc.add(dir);
+    let brrAngle = frameCount / 30
+    let brr = map(sin(brrAngle + this.anOf),-1,1,1,1.1)
+    return {loc,brr}
+  }
+
+  updateAlpha() {
+    let cycleRenew = frameCount % 900;
+    let a1Alpha = 0;
+    if (cycleRenew == 0) {
+      console.log('renew cycle')
+      a1Alpha = 0
+    }
+    a1Alpha += .3;
+  }
+
+  update(loc,brr) {
+    tint(255,this.a1Alpha)
+    image.a1(this.a1,loc.x,loc.y,this.aW*brr,this.aH*brr)
+    // tint(255,this.a2Alpha)
+    // image.a2(this.a2,loc.x,loc.y,this.aW,this.aH)
+    // tint(255,this.a3Alpha)
+    // image.a3(this.a3,loc.x,loc.y,this.aW,this.aH)
+  }
+}
 
 
 const themes = {
@@ -71,69 +237,66 @@ const themes = {
       bgCol4: [245,227,130]
     },
     flowers_B: {
-      fileLocation: '/_rococo/flowers_B',
+      fileLocation: directory + '/_rococo/flowers_B',
       num: 9,
       maxNum: 32
     },
     flowers_F: {
-      fileLocation: '/_rococo/flowers_F',
+      fileLocation: directory + '/_rococo/flowers_F',
       num: 20,
       maxNum: 60
     },
     flowers: {
-      fileLocation: '/_rococo/flowers',
+      fileLocation: directory + '/_rococo/flowers',
       num: 10,
       maxNum: 12
     },
     bigFlowers: {
-      fileLocation: '/_rococo/bigFlowers',
+      fileLocation: directory + '/_rococo/bigFlowers',
       num: 1,
       maxNum: 9
     },
     paint: {
-      fileLocation: '/_rococo/paint',
+      fileLocation: directory + '/_rococo/paint',
       num: 6,
       maxNum: 14
     },
     paintLG: {
-      fileLocation: '/_rococo/paintLG',
+      fileLocation: directory + '/_rococo/paintLG',
       num: 4,
       maxNum: 9
     },
     texture: {
-      fileLocation: '/_rococo/textures',
+      fileLocation: directory + '/_rococo/textures',
       num: 4,
       maxNum: 14
     },
     fullTexture: {
-      fileLocation: '/_rococo/fullTextures',
+      fileLocation: directory + '/_rococo/fullTextures',
       maxNum: 36
     },
     floor: {
-      fileLocation: '/_rococo/floors',
+      fileLocation: directory + '/_rococo/floors',
       num: 1,
       maxNum: 12
     },
-    angTexL: {
-      fileLocation: '/_rococo/angTextures/_L',
-      maxNum: 3
-    },
-    angTexR: {
-      fileLocation: '/_rococo/angTextures/_R',
-      maxNum: 3
-    },
     vase: {
-      fileLocation: '/_rococo/vases',
+      fileLocation: directory + '/_rococo/vases',
       num: 1,
       maxNum: 13
     },
+    // vaseFlowers: {
+    //   fileLocation: '/_rococo/vaseFlowers',
+    //   num: 4,
+    //   maxNum: 5
+    // },
     vaseFlowersB: {
-      fileLocation: '/_rococo/vaseFlowers/_B',
+      fileLocation: directory + '/_rococo/vaseFlowers/_B',
       num: 1,
       maxNum: 10
     },
     vaseFlowersF: {
-      fileLocation: '/_rococo/vaseFlowers/_F',
+      fileLocation: directory + '/_rococo/vaseFlowers/_F',
       num: 2,
       maxNum: 14
     },
@@ -154,56 +317,61 @@ const themes = {
       bgCol4: [187,180,193]
     },
     flowers_B: {
-      fileLocation: '/_countryGarden/flowers_B',
+      fileLocation: directory + '/_countryGarden/flowers_B',
       num: 9,
       maxNum: 50
     },
     flowers_F: {
-      fileLocation: '/_countryGarden/flowers_F',
+      fileLocation: directory + '/_countryGarden/flowers_F',
       num: 20,
       maxNum: 48
     },
     bigFlowers: {
-      fileLocation: '/_countryGarden/bigFlowers',
+      fileLocation: directory + '/_countryGarden/bigFlowers',
       num: 1,
       maxNum: 4
     },
     paint: {
-      fileLocation: '/_countryGarden/paint',
+      fileLocation: directory + '/_countryGarden/paint',
       num: 10,
       maxNum: 34
     },
     paintLG: {
-      fileLocation: '/_countryGarden/paintLG',
+      fileLocation: directory + '/_countryGarden/paintLG',
       num: 5,
       maxNum: 12
     },
     texture: {
-      fileLocation: '/_countryGarden/textures',
+      fileLocation: directory + '/_countryGarden/textures',
       num: 6,
       maxNum: 15
     },
     fullTexture: {
-      fileLocation: '/_countryGarden/fullTextures',
+      fileLocation: directory + '/_countryGarden/fullTextures',
       maxNum: 12
     },
     floor: {
-      fileLocation: '/_countryGarden/floors',
+      fileLocation: directory + '/_countryGarden/floors',
       num: 1,
       maxNum: 5
     },
     vase: {
-      fileLocation: '/_countryGarden/vases',
+      fileLocation: directory + '/_countryGarden/vases',
       num: 1,
       maxNum: 13
     },
+    // vaseFlowers: {
+    //   fileLocation: '/_countryGarden/vaseFlowers',
+    //   num: 4,
+    //   maxNum: 6
+    // },
     vaseFlowersB: {
-      fileLocation: '/_countryGarden/vaseFlowers/_B',
+      fileLocation: directory + '/_countryGarden/vaseFlowers/_B',
       num: 1,
       maxNum: 7
     },
     vaseFlowersF: {
-      fileLocation: '/_countryGarden/vaseFlowers/_F',
+      fileLocation: directory + '/_countryGarden/vaseFlowers/_F',
       num: 2,
       maxNum: 7
     },
@@ -225,55 +393,60 @@ const themes = {
       bgCol5: [255,255,0]
     },
     flowers: {
-      fileLocation: '/_digital/flowers',
+      fileLocation: directory + '/_digital/flowers',
       num: 8,
       maxNum: 42
     },
     bigFlowers: {
-      fileLocation: '/_digital/bigFlowers',
+      fileLocation: directory + '/_digital/bigFlowers',
       num: 1,
       maxNum: 7
     },
     paint: {
-      fileLocation: '/_digital/paint',
+      fileLocation: directory + '/_digital/paint',
       num: 12,
       maxNum: 18
     },
     paintLG: {
-      fileLocation: '/_digital/paintLG',
+      fileLocation: directory + '/_digital/paintLG',
       num: 6,
       maxNum: 17
     },
     texture: {
-      fileLocation: '/_digital/textures',
+      fileLocation: directory + '/_digital/textures',
       num: 4,
       maxNum: 17
     },
     fullTexture: {
-      fileLocation: '/_digital/fullTextures',
+      fileLocation: directory + '/_digital/fullTextures',
       maxNum: 21
     },
     ovTexture: {
-      fileLocation: '/_digital/overlayTextures',
+      fileLocation: directory + '/_digital/overlayTextures',
       maxNum: 3
     },
     floor: {
-      fileLocation: '/_digital/floors',
+      fileLocation: directory + '/_digital/floors',
       num: 1,
       maxNum: 6
     },
     vase: {
-      fileLocation: '/_digital/vases',
+      fileLocation: directory + '/_digital/vases',
       num: 1,
       maxNum: 6
     },
+    // vaseFlowers: {
+    //   fileLocation: '/_digital/vaseFlowers',
+    //   num: 1,
+    //   maxNum: 2
+    // },
     vaseFlowersB: {
-      fileLocation: '/_digital/vaseFlowers/_B',
+      fileLocation: directory + '/_digital/vaseFlowers/_B',
       num: 1,
       maxNum: 5
     },
     vaseFlowersF: {
-      fileLocation: '/_digital/vaseFlowers/_F',
+      fileLocation: directory + '/_digital/vaseFlowers/_F',
       num: 2,
       maxNum: 7
     },
@@ -294,46 +467,46 @@ const themes = {
       bgCol4: [12,68,62]
     },
     flowers: {
-      fileLocation: '/_cmyk/flowers',
+      fileLocation: directory + '/_cmyk/flowers',
       num: 10,
       maxNum: 36
     },
     bigFlowers: {
-      fileLocation: '/_cmyk/bigFlowers',
+      fileLocation: directory + '/_cmyk/bigFlowers',
       num: 1,
       maxNum: 7
     },
     paint: {
-      fileLocation: '/_cmyk/paint',
+      fileLocation: directory + '/_cmyk/paint',
       num: 12,
       maxNum: 51
     },
     paint2: {
-      fileLocation: '/_cmyk/paint',
+      fileLocation: directory + '/_cmyk/paint',
       num: 12,
       maxNum: 44
     },
     paintLG: {
-      fileLocation: '/_cmyk/paintLG',
+      fileLocation: directory + '/_cmyk/paintLG',
       num: 6,
       maxNum: 32
     },
     texture: {
-      fileLocation: '/_cmyk/textures',
+      fileLocation: directory + '/_cmyk/textures',
       num: 4,
       maxNum: 17
     },
     fullTexture: {
-      fileLocation: '/_cmyk/fullTextures',
+      fileLocation: directory + '/_cmyk/fullTextures',
       maxNum: 22
     },
     floor: {
-      fileLocation: '/_cmyk/floors',
+      fileLocation: directory + '/_cmyk/floors',
       num: 1,
       maxNum: 3
     },
     vase: {
-      fileLocation: '/_cmyk/vases',
+      fileLocation: directory + '/_cmyk/vases',
       num: 1,
       maxNum: 5
     },
@@ -343,12 +516,12 @@ const themes = {
     //   maxNum: 2
     // },
     vaseFlowersB: {
-      fileLocation: '/_cmyk/vaseFlowers/_B',
+      fileLocation: directory + '/_cmyk/vaseFlowers/_B',
       num: 1,
       maxNum: 7
     },
     vaseFlowersF: {
-      fileLocation: '/_cmyk/vaseFlowers/_F',
+      fileLocation: directory + '/_cmyk/vaseFlowers/_F',
       num: 2,
       maxNum: 9
     },
@@ -366,41 +539,41 @@ const themes = {
       bgCol1: [255,255,255]
     },
     flowers: {
-      fileLocation: '/_allWhite/flowers',
+      fileLocation: directory + '/_allWhite/flowers',
       num: 20,
       maxNum: 38
     },
     bigFlowers: {
-      fileLocation: '/_allWhite/bigFlowers',
+      fileLocation: directory + '/_allWhite/bigFlowers',
       num: 1,
       maxNum: 10
     },
     paint: {
-      fileLocation: '/_allWhite/paint',
+      fileLocation: directory + '/_allWhite/paint',
       num: 11,
       maxNum: 14
     },
     paintLG: {
-      fileLocation: '/_allWhite/paintLG',
+      fileLocation: directory + '/_allWhite/paintLG',
       num: 6,
       maxNum: 19
     },
     texture: {
-      fileLocation: '/_allWhite/textures',
+      fileLocation: directory + '/_allWhite/textures',
       num: 4,
       maxNum: 10
     },
     fullTexture: {
-      fileLocation: '/_allWhite/fullTextures',
+      fileLocation: directory + '/_allWhite/fullTextures',
       maxNum: 13
     },
     floor: {
-      fileLocation: '/_allWhite/floors',
+      fileLocation: directory + '/_allWhite/floors',
       num: 1,
       maxNum: 5
     },
     vase: {
-      fileLocation: '/_allWhite/vases',
+      fileLocation: directory + '/_allWhite/vases',
       num: 1,
       maxNum: 8
     },
@@ -410,12 +583,12 @@ const themes = {
     //   maxNum: 2
     // },
     vaseFlowersB: {
-      fileLocation: '/_allWhite/vaseFlowers/_B',
+      fileLocation: directory + '/_allWhite/vaseFlowers/_B',
       num: 1,
       maxNum: 4
     },
     vaseFlowersF: {
-      fileLocation: '/_allWhite/vaseFlowers/_F',
+      fileLocation: directory + '/_allWhite/vaseFlowers/_F',
       num: 2,
       maxNum: 10
     },
@@ -432,41 +605,41 @@ const themes = {
       bgCol1: [255,255,255]
     },
     flowers: {
-      fileLocation: '/_graphic/flowers',
+      fileLocation: directory + '/_graphic/flowers',
       num: 10,
       maxNum: 31
     },
     bigFlowers: {
-      fileLocation: '/_graphic/bigFlowers',
+      fileLocation: directory + '/_graphic/bigFlowers',
       num: 1,
       maxNum: 6
     },
     paint: {
-      fileLocation: '/_graphic/paint',
+      fileLocation: directory + '/_graphic/paint',
       num: 9,
       maxNum: 60
     },
     paintLG: {
-      fileLocation: '/_graphic/paintLG',
+      fileLocation: directory + '/_graphic/paintLG',
       num: 3,
       maxNum: 33
     },
     texture: {
-      fileLocation: '/_graphic/textures',
+      fileLocation: directory + '/_graphic/textures',
       num: 2,
       maxNum: 14
     },
     fullTexture: {
-      fileLocation: '/_graphic/fullTextures',
+      fileLocation: directory + '/_graphic/fullTextures',
       maxNum: 19
     },
     floor: {
-      fileLocation: '/_graphic/floors',
+      fileLocation: directory + '/_graphic/floors',
       num: 1,
       maxNum: 5
     },
     vase: {
-      fileLocation: '/_graphic/vases',
+      fileLocation: directory + '/_graphic/vases',
       num: 1,
       maxNum: 12
     },
@@ -476,12 +649,12 @@ const themes = {
     //   maxNum: 4
     // },
     vaseFlowersB: {
-      fileLocation: '/_graphic/vaseFlowers/_B',
+      fileLocation: directory + '/_graphic/vaseFlowers/_B',
       num: 1,
       maxNum: 9
     },
     vaseFlowersF: {
-      fileLocation: '/_graphic/vaseFlowers/_F',
+      fileLocation: directory + '/_graphic/vaseFlowers/_F',
       num: 2,
       maxNum: 8
     },
@@ -675,23 +848,6 @@ let graphics;
 let orderedDraw = [];
 let drawNum = 0;
 
-
-// let bgElements = [];
-// let bgElementIds = [];
-// let paintElements = [];
-// let paintElementIds = [];
-// let flowerElements = [];
-// let flowerElementIds = [];
-// let butterflyElements = [];
-// let butterflyElementIds = [];
-// let largeElements = [];
-// let largeElementIds = [];
-// let symbolElements = [];
-// let symbolElementIds = [];
-// let textureElements = [];
-// let textureElementIds = [];
-// let elementScale;
-
 let fullTextureAssets = [];
 let fullTextureAssetIds = [];
 
@@ -785,27 +941,14 @@ let domX, domY;
 
 let dynamic;
 
-let particlesWater = [];
-let bgNumRows;
-
-let dotsAngle = 0;
-
-let irregCircs = [];
-let zoff = 0;
-
-const slices = 75;
-let blobSize;
-let randomWeights = [];
-
-let blobCol1, blobCol2;
-let blobCols = [];
-
 function preload() {
 
-  comp = chooseComp()
-  //comp = comps.stillLife;
+  //comp = chooseComp()
+  comp = comps.standard;
   theme = chooseTheme()
   //theme = themes.countryGarden;
+
+  console.log(hash)
 
   overlay = rnd()
 
@@ -822,7 +965,6 @@ function preload() {
     }else{
       ovTex = 1
     }
-    console.log(ovTex)
     standardLoad(comp,theme,ovTex,overlay)
   }
   // socials = rnd()
@@ -977,32 +1119,12 @@ function setup() {
 }
 
 function draw() {
-  //image(graphics,width/2,height/2)
-  // //standardUpdate()
-        // translate(width/2,height/2)
-        // if (comp.name !== 'stillLife'){
-        //   standardLayer1()
-        //   //drawCircles()
-        //   //dots_texture()
-        //   //dynamic(theme)
-        //   standardLayer2()
-        // }else{
-        //   stillLifeLayer1()
-        //   //drawCircles()
-        //   //dots_texture()
-        //   //dynamic()
-        //   stillLifeLayer2()
-        // }
-//console.log(frameRate())
-//console.log(particlesWater.length)
-
-drawItIn()
-// console.log(rnd_callCount)
+  drawItIn()
+  // console.log(rnd_callCount)
 }
 
 function loadRandomAssets(num,maxNum,baseArray,fileLoc,fileNameConvention,type,idArray) {
   let array = Array.from(new Array(maxNum-1), (x,i) => i)
-  //console.log(fileNameConvention, array)
   for (let i = 0; i < num; i++) {
     let index = floor(rnd(array.length))
     let assetId = array[index]
@@ -1011,27 +1133,11 @@ function loadRandomAssets(num,maxNum,baseArray,fileLoc,fileNameConvention,type,i
     baseArray.push(new LoadAsset(fileLoc,fileNameConvention,assetId+1,type,idArray))
     baseArray[i].load()
   }
-  // console.log(baseArray)
 }
 
 function standardLoad(comp,theme,ovTex) {
-  //BG TEXTURE OVERLAY
-  // let maxFullTextureId = theme.fullTexture.maxNum;
-  // //let fullTextureId = floor(rnd(1,maxFullTextureId))
-  // let fullTextureId = floor(map(decPairs[21],0,255,1,maxFullTextureId-.1));
-  // console.log(maxFullTextureId,fullTextureId)
-  // //fullTextureAssets.push(new LoadAsset(theme.fullTexture.fileLocation,'fT_',fullTextureId,'none',fullTextureAssetIds)) 
-  // fullTextureAssets.push(new LoadAsset(comp.bgFileLocation+'/'+theme.name,'fT_',fullTextureId,'none',fullTextureAssetIds))
-  // fullTextureAssets[0].load()
-
-  // let maxFullTextureId = 3;
-  // let fullTextureId = floor(map(decPairs[21],0,255,1,maxFullTextureId-.1));
-  // fullTextureAssets.push(new LoadAsset('_' + theme.name + '/' + 'lowD_fT','lowD_fT_',fullTextureId,'none',fullTextureAssetIds))
-  // fullTextureAssets[0].load()
 
   if (comp.name === 'lowDensity') {
-    // let maxFullTextureId = 3;
-    // let fullTextureId = floor(map(decPairs[21],0,255,1,maxFullTextureId-.1));
     fullTextureAssets.push(new LoadAsset('_' + theme.name + '/' + 'lowD_fT','lowD_fT_',1,'none',fullTextureAssetIds))
     fullTextureAssets[0].load()
   }else{
@@ -1099,13 +1205,13 @@ function standardLoad(comp,theme,ovTex) {
     bigFlowerAssets[0].load()
   }
 
-  if (overlay < .5) {
-    let maxOverlayId = 2
-    let overlayId = floor(rnd(1,maxOverlayId))
-    //fullTextureAssets.push(new LoadAsset(theme.fullTexture.fileLocation,'fT_',fullTextureId,'none',fullTextureAssetIds)) 
-    overlayAssets.push(new LoadAsset('/_overlays'+'/','overlay_',overlayId,'none',overlayAssetIds))
-    overlayAssets[0].load()
-  }
+  // if (overlay < .5) {
+  //   let maxOverlayId = 2
+  //   let overlayId = floor(rnd(1,maxOverlayId))
+  //   //fullTextureAssets.push(new LoadAsset(theme.fullTexture.fileLocation,'fT_',fullTextureId,'none',fullTextureAssetIds)) 
+  //   overlayAssets.push(new LoadAsset(directory + '/_overlays'+'/','overlay_',overlayId,'none',overlayAssetIds))
+  //   overlayAssets[0].load()
+  // }
 }
 
 function stillLifeLoad(comp,theme,angTex,ovTex) {
@@ -1180,29 +1286,29 @@ function stillLifeLoad(comp,theme,angTex,ovTex) {
   } 
 }
 
-function petalsLoad() {
-  maxNumPetals = 4
-  loadRandomAssets(numPetals, maxNumPetals, socialAssets, '/socials', 'social_', 'none', socialPetalIds)
-}
+// function petalsLoad() {
+//   maxNumPetals = 4
+//   loadRandomAssets(numPetals, maxNumPetals, socialAssets, '/socials', 'social_', 'none', socialPetalIds)
+// }
 
 function socialsLoad(numSocials) {
   maxNumSocials = 24
-  loadRandomAssets(numSocials, maxNumSocials, socialAssets, '/socials', 'social_', 'none', socialAssetIds)
+  loadRandomAssets(numSocials, maxNumSocials, socialAssets, directory + '/socials', 'social_', 'none', socialAssetIds)
 }
 
 function butterfliesLoad(numButts) {
   maxNumButts = 21
-  loadRandomAssets(numButts, maxNumButts, butterflyAssets, '/butterflies', 'butterfly_', 'none', butterflyAssetIds)
+  loadRandomAssets(numButts, maxNumButts, butterflyAssets, directory + '/butterflies', 'butterfly_', 'none', butterflyAssetIds)
 }
 
 function overTopLoad(numOverTop) {
   maxNumOverTop = 18
-  loadRandomAssets(numOverTop, maxNumOverTop, overTopAssets, '/_overTop', 'overTop_', 'none', overTopAssetIds)
+  loadRandomAssets(numOverTop, maxNumOverTop, overTopAssets, directory + '/_overTop', 'overTop_', 'none', overTopAssetIds)
 }
 
 function blackRoseLoad() {
   maxId = 2
-  loadRandomAssets(1, maxId, blackRoseAssets, '/_blackRose', 'blackRose_', 'none', blackRoseAssetIds)
+  loadRandomAssets(1, maxId, blackRoseAssets, '/_blackRose', directory + 'blackRose_', 'none', blackRoseAssetIds)
 }
 
 

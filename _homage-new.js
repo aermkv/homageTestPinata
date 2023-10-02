@@ -2176,12 +2176,8 @@ function stillLifeLayer2() {
 // let layerCounter = 0;
 
 function drawItIn() {
-  // for (let i = 0; i < orderedDraw.length; i++) {
-
-  // }
   let frames = frameCount;
   let framesModulo = frames % 10;
-  //console.log(framesModulo)
 
   orderedDraw[drawNum].setItem
   let a = orderedDraw[drawNum]
@@ -2190,7 +2186,6 @@ function drawItIn() {
     image(a[0],a[1]+width/2,a[2]+height/2,a[3],a[4])
     console.log(a)
     drawNum++
-    //console.log(drawNum)
   }
 }
 

@@ -593,8 +593,8 @@ const themes = {
 const comps = {
   horizontal: {
     name: 'horizontal',
-    minD: 2.2,
-    maxD: 3,
+    minD: 7,
+    maxD: 11,
     texture: {
       minY: -.35,
       maxY: .45
@@ -758,6 +758,7 @@ function preload() {
     numSocials = 12
   }
   socialsLoad(numSocials)
+  console.log('num socials' + numSocials)
 
   butterflies = map(decPairs[4],0,255,0,1);
   if (butterflies < .7) {
@@ -768,6 +769,7 @@ function preload() {
     numButts = 12
   }
   butterfliesLoad(numButts)
+  console.log('num butterflies' + numButts)
 
   overTops = map(decPairs[5],0,255,0,1);
   if (overTops < .5) {
@@ -791,7 +793,6 @@ function setup() {
   noiseSeed(seed)
   pixelDensity(4)
 
-  // aspRatio = 16/9;
 	smD = (windowWidth * aspRatio) < windowHeight ? windowWidth : windowHeight / aspRatio ; 
 
 	createCanvas(smD, smD*aspRatio);
@@ -809,16 +810,20 @@ function setup() {
   }
 
   if (comp.name !== 'stillLife'){
-    standardLayer1()
-    standardLayer2()
+    // standardLayer1()
+    // standardLayer2()
+    standardDraw1()
+    standardDraw2()
   }else{
     stillLifeLayer1()
     stillLifeLayer2()
   }
+
+  console.log(orderedDraw)
 }
 
 function draw() {
-
+  drawItIn()
 }
 
 
@@ -1265,10 +1270,12 @@ function standardLayer1() {
 
   for (let i = 0; i < textureAssets2.length; i++) {
     textureAssets2[i].setItem()
+    textureAssets2[i].addToArray()
   }
 
   for (let i = 0; i < paintLGAssets2.length; i++) {
     paintLGAssets2[i].setItem()
+    paintLGAssets2[i].addToArray()
   }
 }
 
@@ -1279,19 +1286,23 @@ function standardLayer2() {
   if (comp.name === 'dominant' || comp.name === 'lowDensity') {
     for (let i = 0; i < paintArraysplit; i++) {
       paintAssets2[i].setItem()
+      paintAssets2[i].addToArray()
     }
   }else{
     for (let i = 0; i < paintAssets2.length; i++) {
       paintAssets2[i].setItem()
+      paintAssets2[i].addToArray()
     }
   }
 
   for (let i = 0; i < socialAssets2.length; i++) {
     socialAssets2[i].setItem()
+    socialAssets2[i].addToArray()
   }
 
   for (let i = 0; i < flower_B_Assets2.length; i++) {
     flower_B_Assets2[i].setItem()
+    flower_B_Assets2[i].addToArray()
   }
 
   let flower_F_Arraysplit = flower_F_Assets2.length > 6 ? flower_F_Assets2.length-4 : flower_F_Assets2.length;
@@ -1300,16 +1311,20 @@ function standardLayer2() {
   if (comp.name === 'dominant' || comp.name === 'lowDensity') {
     for (let i = 0; i < flower_F_Arraysplit; i++) {
       flower_F_Assets2[i].setItem()
+      flower_F_Assets2[i].addToArray()
     }
     for (let i = 0; i < flowerArraysplit; i++) {
       flowerAssets2[i].setItem()
+      flowerAssets2[i].addToArray()
     }
   }else{
     for (let i = 0; i < flower_F_Assets2.length; i++) {
       flower_F_Assets2[i].setItem()
+      flower_F_Assets2[i].addToArray()
     }
     for (let i = 0; i < flowerAssets2.length; i++) {
       flowerAssets2[i].setItem()
+      flowerAssets2[i].addToArray()
     }
   }
 
@@ -1325,6 +1340,7 @@ function standardLayer2() {
     }
     for (let i = 0; i < bigFlowerAssets2.length; i++) {
       bigFlowerAssets2[i].setItem()
+      bigFlowerAssets2[i].addToArray()
     }
     pop()
   }
@@ -1332,21 +1348,26 @@ function standardLayer2() {
   if (comp.name === 'dominant' || comp.name === 'lowDensity') {
     for (let i = flower_F_Arraysplit; i < flower_F_Assets2.length; i++) {
       flower_F_Assets2[i].setItem()
+      flower_F_Assets2[i].addToArray()
     }
     for (let i = flowerArraysplit; i < flowerAssets2.length; i++) {
       flowerAssets2[i].setItem()
+      flowerAssets2[i].addToArray()
     }
     for (let i = paintArraysplit; i < paintAssets2.length; i++) {
       paintAssets2[i].setItem()
+      paintAssets2[i].addToArray()
     }
   }
 
   for (let i = 0; i < blackRoseAssets2.length; i++) {
     blackRoseAssets2[i].setItem()
+    blackRoseAssets2[i].addToArray()
   }
 
   for (let i = 0; i < butterflyAssets2.length; i++) {
     butterflyAssets2[i].setItem()
+    butterflyAssets2[i].addToArray()
   }
 
   if (ovTex < .3) {
@@ -1357,6 +1378,7 @@ function standardLayer2() {
 
   for (let i = 0; i < overTopAssets2.length; i++) {
     overTopAssets2[i].setItem()
+    overTopAssets2[i].addToArray()
   }
 }
 
@@ -1368,7 +1390,7 @@ function placeSocials(comp) {
   for (let i = 0; i < socialAssets.length; i++) {
     let pElPos = createVector(rnd(-w(.48),w(.48)),rnd(h(comp.paint.minY),h(comp.paint.maxY)))
     let imgId = socialAssetIds[i]
-    let imgDiv = rnd(minD,maxD)/2//*2
+    let imgDiv = rnd(minD,maxD)*2
     let bMode  = BLEND // OVERLAY;
     blendMode(bMode)
     socialAssets2.push(new PlaceAsset(imgId,pElPos,width/imgDiv,height/imgDiv/aspRatio))
@@ -1515,5 +1537,124 @@ class PlaceAsset {
   }
   addToArray() {
     orderedDraw.push([this.imgId,this.pos.x,this.pos.y,this.w,this.h])
+  }
+}
+
+
+
+function drawItIn() {
+  let frames = frameCount;
+  let framesModulo = frames % 10;
+
+  orderedDraw[drawNum].setItem
+  let a = orderedDraw[drawNum]
+
+  if (framesModulo == 0 && frames < orderedDraw.length*5) {
+    image(a[0],a[1]+width/2,a[2]+height/2,a[3],a[4])
+    console.log(a)
+    drawNum++
+  }
+}
+
+function standardDraw1() {
+  blendMode(BLEND)
+  let fT = fullTextureAssetIds[0]
+  image(fT,0,0,width,height)
+
+  for (let i = 0; i < textureAssets2.length; i++) {
+    textureAssets2[i].addToArray()
+  }
+
+  for (let i = 0; i < paintLGAssets2.length; i++) {
+    paintLGAssets2[i].addToArray()
+  }
+}
+
+function standardDraw2() {
+
+  let paintArraysplit = paintAssets2.length - 6
+
+  if (comp.name === 'dominant' || comp.name === 'lowDensity') {
+    for (let i = 0; i < paintArraysplit; i++) {
+      paintAssets2[i].addToArray()
+    }
+  }else{
+    for (let i = 0; i < paintAssets2.length; i++) {
+      paintAssets2[i].addToArray()
+    }
+  }
+
+  for (let i = 0; i < socialAssets2.length; i++) {
+    socialAssets2[i].addToArray()
+  }
+
+  for (let i = 0; i < flower_B_Assets2.length; i++) {
+    flower_B_Assets2[i].addToArray()
+  }
+
+  let flower_F_Arraysplit = flower_F_Assets2.length > 6 ? flower_F_Assets2.length-4 : flower_F_Assets2.length;
+  let flowerArraysplit = flowerAssets2.length > 6 ? flowerAssets2.length-4 : flowerAssets2.length;
+
+  if (comp.name === 'dominant' || comp.name === 'lowDensity') {
+    for (let i = 0; i < flower_F_Arraysplit; i++) {
+      flower_F_Assets2[i].addToArray()
+    }
+    for (let i = 0; i < flowerArraysplit; i++) {
+      flowerAssets2[i].addToArray()
+    }
+  }else{
+    for (let i = 0; i < flower_F_Assets2.length; i++) {
+      flower_F_Assets2[i].addToArray()
+    }
+    for (let i = 0; i < flowerAssets2.length; i++) {
+      flowerAssets2[i].addToArray()
+    }
+  }
+
+  if (comp.name === 'dominant' || comp.name === 'lowDensity') {
+    push()
+    translate(domPos.x,domPos.y)
+    if (domPos.x > 0 && domPos.y < 0) {
+      rotate(radians(90))
+    }else if (domPos.x > 0 && domPos.y > 0) {
+      rotate(radians(180))
+    }else if (domPos.x < 0 && domPos.y > 0) {
+      rotate(radians(270))
+    }
+    for (let i = 0; i < bigFlowerAssets2.length; i++) {
+      bigFlowerAssets2[i].addToArray()
+    }
+    pop()
+  }
+
+  if (comp.name === 'dominant' || comp.name === 'lowDensity') {
+    for (let i = flower_F_Arraysplit; i < flower_F_Assets2.length; i++) {
+      flower_F_Assets2[i].addToArray()
+      console.log(i)
+    }
+    for (let i = flowerArraysplit; i < flowerAssets2.length; i++) {
+      flowerAssets2[i].addToArray()
+    }
+    for (let i = paintArraysplit; i < paintAssets2.length; i++) {
+      paintAssets2[i].addToArray()
+    }
+  }
+
+  for (let i = 0; i < blackRoseAssets2.length; i++) {
+    blackRoseAssets2[i].addToArray()
+  }
+
+  for (let i = 0; i < butterflyAssets2.length; i++) {
+    butterflyAssets2[i].addToArray()
+  }
+
+  if (ovTex < .3) {
+    blendMode(BLEND)
+    let overlay = ovTextureAssetIds[0]
+    image(overlay,0,0,width,height)
+  }
+
+  for (let i = 0; i < overTopAssets2.length; i++) {
+    overTopAssets2[i].addToArray()
   }
 }

@@ -596,28 +596,28 @@ const comps = {
     minD: 7,
     maxD: 11,
     texture: {
-      minY: -.35,
-      maxY: .45
+      minY: .4,
+      maxY: .6
     },
     paintLG: {
-      minY: -.45,
-      maxY: .45
+      minY: 0,
+      maxY: 1
     },
     paint: {
-      minY: -.4,
-      maxY: .48
+      minY: 0,
+      maxY: 1
     },
     flowers: {
-      minY: -.1,
-      maxY: .53
+      minY: 0,
+      maxY: 1
     },
     flowers_B: {
-      minY: -.1,
-      maxY: .53
+      minY: 0,
+      maxY: 1
     },
     flowers_F: {
-      minY: .1,
-      maxY: .53
+      minY: 0,
+      maxY: 1
     }
   }
 }
@@ -797,14 +797,17 @@ function setup() {
 
 	createCanvas(smD, smD*aspRatio);
 
-  translate(width/2,height/2)
+  console.log('width: ' + width)
+  console.log('height: ' + height)
+
+  // translate(width/2,height/2)
   let bgCol = chooseObjKey(theme.bgColors)
   background(bgCol)
 
   imageMode(CENTER);
 
   if (comp.name === 'stillLife') {
-    stillLife(comp,theme,hasBlackRose)
+    // stillLife(comp,theme,hasBlackRose)
   }else{
     standard(comp,theme,ovTex,hasBlackRose)
   }
@@ -813,17 +816,25 @@ function setup() {
     // standardLayer1()
     // standardLayer2()
     standardDraw1()
-    standardDraw2()
+    // standardDraw2()
   }else{
-    stillLifeLayer1()
-    stillLifeLayer2()
+    // stillLifeLayer1()
+    // stillLifeLayer2()
   }
 
   console.log(orderedDraw)
+
 }
 
 function draw() {
   drawItIn()
+  ellipse(0,0,50)
+  ellipse(w(.5),h(.5),50)
+  ellipse(width,height,50)
+  ellipse(width,0,50)
+  ellipse(0,height,50)
+  line(0,height/2,width,height/2)
+  line(width/2,0,width/2,height)
 }
 
 
@@ -964,7 +975,8 @@ function standard(comp,theme) {
   }
 
   for (let i = 0; i < textureAssets.length; i++) {
-    let pElPos = createVector(rnd(-w(.35),w(.35)),rnd(h(comp.texture.minY),h(comp.texture.maxY)))
+    // let pElPos = createVector(rnd(-w(.35),w(.35)),rnd(h(comp.texture.minY),h(comp.texture.maxY)))
+    let pElPos = createVector(rnd(w(.4),w(.6)),rnd(h(comp.texture.minY),h(comp.texture.maxY)))
     let imgId = textureAssetIds[i]
     let imgDiv = rnd(minD,maxD)/3
 
@@ -994,7 +1006,8 @@ function standard(comp,theme) {
   }
 
   for (let i = 0; i < paintLGAssets.length; i++) {
-    let pElPos = createVector(rnd(-w(.48),w(.48)),rnd(h(comp.paintLG.minY),h(comp.paintLG.maxY)))
+    // let pElPos = createVector(rnd(-w(.48),w(.48)),rnd(h(comp.paintLG.minY),h(comp.paintLG.maxY)))
+    let pElPos = createVector(rnd(0,width),rnd(h(comp.paintLG.minY),h(comp.paintLG.maxY)))
     let imgId = paintLGAssetIds[i]
     let imgDiv = rnd(minD,maxD)/4
 
@@ -1558,39 +1571,43 @@ function drawItIn() {
 
 function standardDraw1() {
   blendMode(BLEND)
+  push()
   let fT = fullTextureAssetIds[0]
-  image(fT,0,0,width,height)
+  rotate(radians(90))
+  image(fT,0,0,height,width)
+  pop()
 
   for (let i = 0; i < textureAssets2.length; i++) {
     textureAssets2[i].addToArray()
   }
+  console.log(textureAssets2.length)
 
-  for (let i = 0; i < paintLGAssets2.length; i++) {
-    paintLGAssets2[i].addToArray()
-  }
+  // for (let i = 0; i < paintLGAssets2.length; i++) {
+  //   paintLGAssets2[i].addToArray()
+  // }
 }
 
 function standardDraw2() {
 
   let paintArraysplit = paintAssets2.length - 6
 
-  if (comp.name === 'dominant' || comp.name === 'lowDensity') {
-    for (let i = 0; i < paintArraysplit; i++) {
-      paintAssets2[i].addToArray()
-    }
-  }else{
-    for (let i = 0; i < paintAssets2.length; i++) {
-      paintAssets2[i].addToArray()
-    }
-  }
+  // if (comp.name === 'dominant' || comp.name === 'lowDensity') {
+  //   for (let i = 0; i < paintArraysplit; i++) {
+  //     paintAssets2[i].addToArray()
+  //   }
+  // }else{
+  //   for (let i = 0; i < paintAssets2.length; i++) {
+  //     paintAssets2[i].addToArray()
+  //   }
+  // }
 
-  for (let i = 0; i < socialAssets2.length; i++) {
-    socialAssets2[i].addToArray()
-  }
+  // for (let i = 0; i < socialAssets2.length; i++) {
+  //   socialAssets2[i].addToArray()
+  // }
 
-  for (let i = 0; i < flower_B_Assets2.length; i++) {
-    flower_B_Assets2[i].addToArray()
-  }
+  // for (let i = 0; i < flower_B_Assets2.length; i++) {
+  //   flower_B_Assets2[i].addToArray()
+  // }
 
   let flower_F_Arraysplit = flower_F_Assets2.length > 6 ? flower_F_Assets2.length-4 : flower_F_Assets2.length;
   let flowerArraysplit = flowerAssets2.length > 6 ? flowerAssets2.length-4 : flowerAssets2.length;

@@ -113,6 +113,7 @@ const hashSeed = makeHashSeed(64)
 
 console.log(hashSeed)
 var hash = sha256(hashSeed)
+//var hash = '2484da0c5b08a412867521e32ebe870b9fab887c292c4a66a69e5349433d4091'
 console.log(hash)
 
 const hashPairs = [];
@@ -809,13 +810,14 @@ function setup() {
   if (comp.name === 'stillLife') {
     // stillLife(comp,theme,hasBlackRose)
   }else{
-    standard(comp,theme,ovTex,hasBlackRose)
+    //standard(comp,theme,ovTex,hasBlackRose)
+    hStandard(theme)
   }
 
   if (comp.name !== 'stillLife'){
     // standardLayer1()
     // standardLayer2()
-    standardDraw1()
+    // standardDraw1()
     // standardDraw2()
   }else{
     // stillLifeLayer1()
@@ -951,6 +953,71 @@ function blackRoseLoad() {
 
 
 
+function hStandard(theme) {
+  minD = comp.minD, maxD = comp.maxD;
+
+  push()
+  let fT = fullTextureAssetIds[0]
+  translate(width/2,height/2)
+  rotate(radians(90))
+  image(fT,0,0,height,width)
+  pop()
+
+  for (let i = 0; i < textureAssets.length; i++) {
+    let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.05),h(.95)));
+    let imgId = textureAssetIds[i]
+    let imgDiv = rnd(minD,maxD)/3
+    stSizeAdjust = 1;
+    textureAssets2.push(new PlaceAsset(imgId, pElPos, (width/imgDiv)*stSizeAdjust, (height/imgDiv/aspRatio)*stSizeAdjust))
+    textureAssets2[i].addToArray()
+  }
+
+  for (let i = 0; i < paintLGAssets.length; i++) {
+    let pElPos = createVector(rnd(0,width),rnd(h(comp.paintLG.minY),h(comp.paintLG.maxY)))
+    let imgId = paintLGAssetIds[i]
+    let imgDiv = rnd(minD,maxD)/4
+    stSizeAdjust = 1;
+    paintLGAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
+    paintLGAssets2[i].addToArray()
+  }
+
+  for (let i = 0; i < paintAssets.length; i++) {
+    let pElPos = createVector(rnd(-w(.48),w(.48)),rnd(h(comp.paint.minY),h(comp.paint.maxY)))
+    let imgId = paintAssetIds[i]
+    let imgDiv = rnd(minD,maxD)/2
+    stSizeAdjust = map(pElPos.y,h(comp.paint.minY),h(comp.paint.maxY),1,1.7);
+    paintAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
+    paintAssets2[i].addToArray()
+  }
+
+  if (theme.name === 'rococo') {
+    for (let i = 0; i < flower_B_assets.length;i++) {
+      let pElPos = createVector(rnd(-w(.48),w(.48)),rnd(h(comp.flowers_B.minY),h(comp.flowers_B.maxY)))
+      let imgId = flower_B_AssetIds[i]
+      let imgDiv = rnd(minD,maxD)
+      stSizeAdjust = map(pElPos.y,h(comp.flowers_B.minY),h(comp.flowers_B.maxY),1.3,1.8);
+      flower_B_Assets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
+      flower_B_Assets2[i].addToArray()
+    }
+    for (let i = 0; i < flower_F_Assets.length; i++) {
+      let pElPos = createVector(rnd(-w(.48),w(.48)),rnd(h(comp.flowers_F.minY),h(comp.flowers_F.maxY)))
+      let imgId = flower_F_AssetIds[i]
+      let imgDiv = rnd(minD,maxD)*1.2
+      stSizeAdjust = map(pElPos.y,h(comp.flowers_F.minY),h(comp.flowers_F.maxY),1,1.7);
+      flower_F_Assets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
+      flower_F_Assets2[i].addToArray()
+    }
+  }else{
+    for (let i = 0; i < flowerAssets.length; i++) {
+      let pElPos = createVector(rnd(-w(.48),w(.48)),rnd(h(comp.flowers.minY),h(comp.flowers.maxY)))
+      let imgId = flowerAssetIds[i]
+      let imgDiv = rnd(minD,maxD)
+      stSizeAdjust = map(pElPos.y,h(comp.flowers.minY),h(comp.flowers.maxY),1,1.7);
+      flowerAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
+      flowerAssets2[i].addToArray()
+    }
+  }
+}
 
 function standard(comp,theme) {
   minD = comp.minD, maxD = comp.maxD;
@@ -959,7 +1026,7 @@ function standard(comp,theme) {
   let fT = fullTextureAssetIds[0]
   push()
   rotate(radians(90))
-  image(fT,0,0,width,height)
+  //image(fT,0,0,width,height)
   pop()
 
   if (comp.name === 'standard' || comp.name === 'lowDensity') {
@@ -1001,7 +1068,7 @@ function standard(comp,theme) {
     push()
     rotate(90*floor(rnd(4)))
     textureAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
-    textureAssets2[i].setItem()
+    // textureAssets2[i].setItem()
     pop()
   }
 
@@ -1024,7 +1091,7 @@ function standard(comp,theme) {
     let bMode = BLEND
     blendMode(bMode)
     paintLGAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
-    paintLGAssets2[i].setItem()
+    // paintLGAssets2[i].setItem()
   }
 
   if (comp.name === 'lowDensity') {
@@ -1041,7 +1108,7 @@ function standard(comp,theme) {
     let imgId = paintAssetIds[i]
     let imgDiv = rnd(minD,maxD)/2//*2
 
-    if (comp.name === 'standard') {
+    if (comp.name === 'standard' || comp.name === 'horizontal') {
       stSizeAdjust = map(pElPos.y,h(comp.paint.minY),h(comp.paint.maxY),1,1.7);
     }else if(comp.name === 'dominant'){
       if (i >= paintArraysplit) {
@@ -1091,7 +1158,7 @@ function standard(comp,theme) {
     let bMode  = BLEND // OVERLAY;
     blendMode(bMode)
     paintAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
-    paintAssets2[i].setItem()
+    // paintAssets2[i].setItem()
   }
 
   placeSocials(comp)
@@ -1105,7 +1172,7 @@ function standard(comp,theme) {
       let imgId = flower_B_AssetIds[i]
       let imgDiv = rnd(minD,maxD)
 
-      if (comp.name === 'standard') {
+      if (comp.name === 'standard' || comp.name === 'horizontal') {
         stSizeAdjust = map(pElPos.y,h(comp.flowers_B.minY),h(comp.flowers_B.maxY),1.3,1.8);
       }else if(comp.name === 'dominant'){
         stSizeAdjust = map(dist(pElPos.x,pElPos.y,domPos.x,domPos.y),0,w(1.2),1.8,.75);
@@ -1125,7 +1192,7 @@ function standard(comp,theme) {
       let imgId = flower_F_AssetIds[i]
       let imgDiv = rnd(minD,maxD)*1.2
 
-      if (comp.name === 'standard') {
+      if (comp.name === 'standard' || comp.name === 'horizontal') {
         stSizeAdjust = map(pElPos.y,h(comp.flowers_F.minY),h(comp.flowers_F.maxY),1,1.7);
       }else if(comp.name === 'dominant'){
         if (i >= flower_F_Arraysplit) {
@@ -1174,7 +1241,7 @@ function standard(comp,theme) {
       let bMode = BLEND
       blendMode(bMode)
       flower_F_Assets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
-      flower_F_Assets2[i].setItem()
+      // flower_F_Assets2[i].setItem()
     }
   }else{
     for (let i = 0; i < flowerAssets.length; i++) {
@@ -1182,7 +1249,7 @@ function standard(comp,theme) {
       let imgId = flowerAssetIds[i]
       let imgDiv = rnd(minD,maxD)
 
-      if (comp.name === 'standard') {
+      if (comp.name === 'standard' || comp.name === 'horizontal') {
         stSizeAdjust = map(pElPos.y,h(comp.flowers.minY),h(comp.flowers.maxY),1,1.7);
       }else if(comp.name === 'dominant'){
         if (i >= flowerArraysplit) {
@@ -1232,7 +1299,7 @@ function standard(comp,theme) {
       let bMode = BLEND
       blendMode(bMode)
       flowerAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
-      flowerAssets2[i].setItem()
+      // flowerAssets2[i].setItem()
     }
   }
 
@@ -1271,7 +1338,7 @@ function standard(comp,theme) {
       rotate(radians(270))
     }
     bigFlowerAssets2.push(new PlaceAsset(bigFlower,defaultPos,width*mult,height*mult/aspRatio))
-    bigFlowerAssets2[0].setItem()
+    // bigFlowerAssets2[0].setItem()
     pop()
   }
 }
@@ -1561,10 +1628,16 @@ function drawItIn() {
 
   orderedDraw[drawNum].setItem
   let a = orderedDraw[drawNum]
+  let startFrame;
 
   if (framesModulo == 0 && frames < orderedDraw.length*5) {
-    image(a[0],a[1]+width/2,a[2]+height/2,a[3],a[4])
-    console.log(a)
+    startFrame = frameCount;
+    console.log(startFrame,frameCount)
+    image(a[0],a[1],a[2],a[3],a[4])
+    // fill(255,0,0)
+    // ellipse(a[1],a[2],25)
+    console.log(a[1],a[2])
+    console.log(drawNum)
     drawNum++
   }
 }
@@ -1573,12 +1646,14 @@ function standardDraw1() {
   blendMode(BLEND)
   push()
   let fT = fullTextureAssetIds[0]
+  //rotate(radians(90))
+  translate(width/2,height/2)
   rotate(radians(90))
   image(fT,0,0,height,width)
   pop()
 
   for (let i = 0; i < textureAssets2.length; i++) {
-    textureAssets2[i].addToArray()
+    // textureAssets2[i].addToArray()
   }
   console.log(textureAssets2.length)
 

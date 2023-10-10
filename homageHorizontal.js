@@ -639,6 +639,8 @@ let graphics;
 let orderedDraw = [];
 let drawNum = 0;
 
+let dynamicAssets = [];
+
 
 
 let fullTextureAssets = [];
@@ -830,6 +832,7 @@ function setup() {
 
 function draw() {
   drawItIn()
+  activateDynamicAssets()
   ellipse(0,0,50)
   ellipse(w(.5),h(.5),50)
   ellipse(width,height,50)
@@ -963,36 +966,36 @@ function hStandard(theme) {
   image(fT,0,0,height,width)
   pop()
 
-  for (let i = 0; i < textureAssets.length; i++) {
-    let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.05),h(.95)));
-    let imgId = textureAssetIds[i]
-    let imgDiv = rnd(minD,maxD)/3
-    stSizeAdjust = 1;
-    textureAssets2.push(new PlaceAsset(imgId, pElPos, (width/imgDiv)*stSizeAdjust, (height/imgDiv/aspRatio)*stSizeAdjust))
-    textureAssets2[i].addToArray()
-  }
+  // for (let i = 0; i < textureAssets.length; i++) {
+  //   let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.05),h(.95)));
+  //   let imgId = textureAssetIds[i]
+  //   let imgDiv = rnd(minD,maxD)/3
+  //   stSizeAdjust = 1;
+  //   textureAssets2.push(new PlaceAsset(imgId, pElPos, (width/imgDiv)*stSizeAdjust, (height/imgDiv/aspRatio)*stSizeAdjust))
+  //   textureAssets2[i].addToArray()
+  // }
 
-  for (let i = 0; i < paintLGAssets.length; i++) {
-    let pElPos = createVector(rnd(0,width),rnd(h(comp.paintLG.minY),h(comp.paintLG.maxY)))
-    let imgId = paintLGAssetIds[i]
-    let imgDiv = rnd(minD,maxD)/4
-    stSizeAdjust = 1;
-    paintLGAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
-    paintLGAssets2[i].addToArray()
-  }
+  // for (let i = 0; i < paintLGAssets.length; i++) {
+  //   let pElPos = createVector(rnd(0,width),rnd(h(comp.paintLG.minY),h(comp.paintLG.maxY)))
+  //   let imgId = paintLGAssetIds[i]
+  //   let imgDiv = rnd(minD,maxD)/4
+  //   stSizeAdjust = 1;
+  //   paintLGAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
+  //   paintLGAssets2[i].addToArray()
+  // }
 
-  for (let i = 0; i < paintAssets.length; i++) {
-    let pElPos = createVector(rnd(-w(.48),w(.48)),rnd(h(comp.paint.minY),h(comp.paint.maxY)))
-    let imgId = paintAssetIds[i]
-    let imgDiv = rnd(minD,maxD)/2
-    stSizeAdjust = map(pElPos.y,h(comp.paint.minY),h(comp.paint.maxY),1,1.7);
-    paintAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
-    paintAssets2[i].addToArray()
-  }
+  // for (let i = 0; i < paintAssets.length; i++) {
+  //   let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.05),h(.95)))
+  //   let imgId = paintAssetIds[i]
+  //   let imgDiv = rnd(minD,maxD)/2
+  //   stSizeAdjust = map(pElPos.y,h(comp.paint.minY),h(comp.paint.maxY),1,1.7);
+  //   paintAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
+  //   paintAssets2[i].addToArray()
+  // }
 
   if (theme.name === 'rococo') {
     for (let i = 0; i < flower_B_assets.length;i++) {
-      let pElPos = createVector(rnd(-w(.48),w(.48)),rnd(h(comp.flowers_B.minY),h(comp.flowers_B.maxY)))
+      let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.05),h(.95)))
       let imgId = flower_B_AssetIds[i]
       let imgDiv = rnd(minD,maxD)
       stSizeAdjust = map(pElPos.y,h(comp.flowers_B.minY),h(comp.flowers_B.maxY),1.3,1.8);
@@ -1000,7 +1003,7 @@ function hStandard(theme) {
       flower_B_Assets2[i].addToArray()
     }
     for (let i = 0; i < flower_F_Assets.length; i++) {
-      let pElPos = createVector(rnd(-w(.48),w(.48)),rnd(h(comp.flowers_F.minY),h(comp.flowers_F.maxY)))
+      let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.05),h(.95)))
       let imgId = flower_F_AssetIds[i]
       let imgDiv = rnd(minD,maxD)*1.2
       stSizeAdjust = map(pElPos.y,h(comp.flowers_F.minY),h(comp.flowers_F.maxY),1,1.7);
@@ -1010,7 +1013,7 @@ function hStandard(theme) {
   }else{
     console.log('num flowers: ' + flowerAssets.length)
     for (let i = 0; i < flowerAssets.length; i++) {
-      let pElPos = createVector(rnd(-w(.48),w(.48)),rnd(h(comp.flowers.minY),h(comp.flowers.maxY)))
+      let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.05),h(.95)))
       let imgId = flowerAssetIds[i]
       let imgDiv = rnd(minD,maxD)
       stSizeAdjust = map(pElPos.y,h(comp.flowers.minY),h(comp.flowers.maxY),1,1.7);
@@ -1618,6 +1621,24 @@ class PlaceAsset {
   }
   addToArray() {
     orderedDraw.push([this.imgId,this.pos.x,this.pos.y,this.w,this.h])
+    // orderedDraw.push(new DynamicAsset(this.imgId,this.pos.x,this.pos.y,this.w,this.h))
+  }
+}
+
+class DynamicAsset {
+  constructor(_imgId,_x,_y,_w,_h,_start) {
+    this.imgId = _imgId;
+    this.x = _x;
+    this.y = _y;
+    this.w = _w;
+    this.h = _h;
+    this.start = _start;
+  }
+
+  fadeIn() {
+    let imgAlpha = map(frameCount,this.start,this.start+24,0,255)
+    tint(255,imgAlpha)
+    image(this.imgId,this.x,this.y,this.w,this.h)
   }
 }
 
@@ -1632,15 +1653,27 @@ function drawItIn() {
   let startFrame;
   let startFrames = [];
 
-  if (framesModulo == 0 && frames < orderedDraw.length*5) {
+  // if (framesModulo == 0 && frames < orderedDraw.length*5) {
+  //   startFrame = frameCount;
+  //   console.log(startFrame,frameCount);
+  //   image(a[0],a[1],a[2],a[3],a[4]);
+  //   // fill(255,0,0)
+  //   // ellipse(a[1],a[2],25)
+  //   console.log(a[1],a[2]);
+  //   console.log(drawNum);
+  //   drawNum++
+  // }
+
+  if (framesModulo == 0 && frames < orderedDraw.length*10) {
     startFrame = frameCount;
-    console.log(startFrame,frameCount);
-    image(a[0],a[1],a[2],a[3],a[4]);
-    // fill(255,0,0)
-    // ellipse(a[1],a[2],25)
-    console.log(a[1],a[2]);
-    console.log(drawNum);
+    dynamicAssets.push(new DynamicAsset(a[0],a[1],a[2],a[3],a[4],startFrame))
     drawNum++
+  }
+}
+
+function activateDynamicAssets() {
+  for (let i = 0; i < dynamicAssets.length; i++) {
+    dynamicAssets[i].fadeIn()
   }
 }
 

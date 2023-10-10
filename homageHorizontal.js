@@ -1634,26 +1634,12 @@ function drawItIn() {
 
   if (framesModulo == 0 && frames < orderedDraw.length*5) {
     startFrame = frameCount;
-    startFrames.push(startFrame)
-  }
-
-  // if (framesModulo == 0 && frames < orderedDraw.length*5) {
-  //   startFrame = frameCount;
-  //   console.log(startFrame,frameCount);
-  //   image(a[0],a[1],a[2],a[3],a[4]);
-  //   // fill(255,0,0)
-  //   // ellipse(a[1],a[2],25)
-  //   console.log(a[1],a[2]);
-  //   console.log(drawNum);
-  //   drawNum++
-  // }
-
-  for (let i = 0; i < orderedDraw.length; i++) {
-    if (frameCount >= startFrames[i]) {
-      let imgAlpha = map(frameCount,startFrames[i],startFrames[i]+24,0,255);
-      tint(255,imgAlpha);
-      image(a[0],a[1],a[2],a[3],a[4]);
-    }
+    console.log(startFrame,frameCount);
+    image(a[0],a[1],a[2],a[3],a[4]);
+    // fill(255,0,0)
+    // ellipse(a[1],a[2],25)
+    console.log(a[1],a[2]);
+    console.log(drawNum);
     drawNum++
   }
 }

@@ -1008,6 +1008,7 @@ function hStandard(theme) {
       flower_F_Assets2[i].addToArray()
     }
   }else{
+    console.log('num flowers: ' + flowerAssets.length)
     for (let i = 0; i < flowerAssets.length; i++) {
       let pElPos = createVector(rnd(-w(.48),w(.48)),rnd(h(comp.flowers.minY),h(comp.flowers.maxY)))
       let imgId = flowerAssetIds[i]
@@ -1626,18 +1627,33 @@ function drawItIn() {
   let frames = frameCount;
   let framesModulo = frames % 10;
 
-  orderedDraw[drawNum].setItem
+  //orderedDraw[drawNum].setItem
   let a = orderedDraw[drawNum]
   let startFrame;
+  let startFrames = [];
 
   if (framesModulo == 0 && frames < orderedDraw.length*5) {
     startFrame = frameCount;
-    console.log(startFrame,frameCount)
-    image(a[0],a[1],a[2],a[3],a[4])
-    // fill(255,0,0)
-    // ellipse(a[1],a[2],25)
-    console.log(a[1],a[2])
-    console.log(drawNum)
+    startFrames.push(startFrame)
+  }
+
+  // if (framesModulo == 0 && frames < orderedDraw.length*5) {
+  //   startFrame = frameCount;
+  //   console.log(startFrame,frameCount);
+  //   image(a[0],a[1],a[2],a[3],a[4]);
+  //   // fill(255,0,0)
+  //   // ellipse(a[1],a[2],25)
+  //   console.log(a[1],a[2]);
+  //   console.log(drawNum);
+  //   drawNum++
+  // }
+
+  for (let i = 0; i < orderedDraw.length; i++) {
+    if (frameCount >= startFrames[i]) {
+      let imgAlpha = map(frameCount,startFrames[i],startFrames[i]+24,0,255);
+      tint(255,imgAlpha);
+      image(a[0],a[1],a[2],a[3],a[4]);
+    }
     drawNum++
   }
 }

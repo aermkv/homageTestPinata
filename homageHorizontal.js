@@ -112,7 +112,7 @@ function sha256(ascii) {
 const hashSeed = makeHashSeed(64)
 
 console.log(hashSeed)
-var hash = sha256(hashSeed)
+//var hash = 'd206f12254b6f50a424ef53888a805e7d44886966526b5c888efe4a7c05cc6d4'
 //var hash = '2484da0c5b08a412867521e32ebe870b9fab887c292c4a66a69e5349433d4091'
 //var hash = 'a4e00ac8e89fe01c0eda1a457cece9851284556497e27875e94f7741d6f04e2a'
 //var hash = 'b1bea3f40018246e0863ec91b3fe210728e88c16a2a19d2ef016c3e3598b97b7'
@@ -492,7 +492,7 @@ const themes = {
     paint: {
       fileLocation: directory + '/_allWhite/paint',
       // num: 11,
-      num: 15,
+      num: 13,
       maxNum: 14
     },
     paintLG: {
@@ -889,31 +889,15 @@ function standardLoad(comp,theme,ovTex) {
 
   // textures
   let numTextures = theme.texture.num
-  if (theme.name === 'graphic' && (comp.name === 'standard' || comp.name === 'highVolume')) {
-    numTextures = theme.texture.num + 1
-  }
   loadRandomAssets(numTextures, theme.texture.maxNum, textureAssets, theme.texture.fileLocation, 'texture_', 'none', textureAssetIds)
 
   // paint LG
   let numPaintLG = theme.paintLG.num
-  if (theme.name === 'graphic' && (comp.name === 'standard' || comp.name === 'highVolume')) {
-    numPaintLG = theme.paintLG.num + 1
-  }
   loadRandomAssets(numPaintLG, theme.paintLG.maxNum, paintLGAssets, theme.paintLG.fileLocation, 'paintLG_', 'none', paintLGAssetIds)
 
   // paint
   let numPaint = theme.paint.num
-  if (theme.name === 'graphic' && (comp.name === 'standard' || comp.name === 'highVolume')) {
-    numPaint = theme.paint.num + 2
-  }
   loadRandomAssets(numPaint, theme.paint.maxNum, paintAssets, theme.paint.fileLocation, 'paint_', 'none', paintAssetIds)
-
-  if (comp.name === 'lowDensity') {
-    let maxFloorId = theme.floor.maxNum;
-    let floorId = floor(rnd(1,maxFloorId))
-    floorAssets.push(new LoadAsset(theme.floor.fileLocation+'/','floor_',floorId,'none',floorAssetIds))
-    floorAssets[0].load()
-  }
 
   if (theme.name === 'countryGarden' || theme.name === 'rococo') {
     // COUNTRY GARDEN / ROCOCO FLOWERS

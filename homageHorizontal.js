@@ -115,6 +115,7 @@ console.log(hashSeed)
 var hash = sha256(hashSeed)
 //var hash = '2484da0c5b08a412867521e32ebe870b9fab887c292c4a66a69e5349433d4091'
 //var hash = 'a4e00ac8e89fe01c0eda1a457cece9851284556497e27875e94f7741d6f04e2a'
+//var hash = 'b1bea3f40018246e0863ec91b3fe210728e88c16a2a19d2ef016c3e3598b97b7'
 console.log(hash)
 
 const hashPairs = [];
@@ -339,7 +340,8 @@ const themes = {
     },
     flowers: {
       fileLocation: directory + '/_digital/flowers',
-      num: 8,
+      // num: 8,
+      num: 12,
       maxNum: 42
     },
     bigFlowers: {
@@ -349,7 +351,8 @@ const themes = {
     },
     paint: {
       fileLocation: directory + '/_digital/paint',
-      num: 12,
+      // num: 12,
+      num: 16,
       maxNum: 18
     },
     paintLG: {
@@ -408,7 +411,8 @@ const themes = {
     },
     flowers: {
       fileLocation: directory + '/_cmyk/flowers',
-      num: 10,
+      // num: 10,
+      num: 15,
       maxNum: 36
     },
     bigFlowers: {
@@ -418,7 +422,8 @@ const themes = {
     },
     paint: {
       fileLocation: directory + '/_cmyk/paint',
-      num: 12,
+      // num: 12,
+      num: 16,
       maxNum: 51
     },
     paint2: {
@@ -475,7 +480,8 @@ const themes = {
     },
     flowers: {
       fileLocation: directory + '/_allWhite/flowers',
-      num: 20,
+      // num: 20,
+      num: 28,
       maxNum: 38
     },
     bigFlowers: {
@@ -485,7 +491,8 @@ const themes = {
     },
     paint: {
       fileLocation: directory + '/_allWhite/paint',
-      num: 11,
+      // num: 11,
+      num: 15,
       maxNum: 14
     },
     paintLG: {
@@ -536,7 +543,8 @@ const themes = {
     },
     flowers: {
       fileLocation: directory + '/_graphic/flowers',
-      num: 10,
+      // num: 10,
+      num: 15,
       maxNum: 31
     },
     bigFlowers: {
@@ -546,7 +554,8 @@ const themes = {
     },
     paint: {
       fileLocation: directory + '/_graphic/paint',
-      num: 9,
+      // num: 9,
+      num: 12,
       maxNum: 60
     },
     paintLG: {
@@ -602,11 +611,11 @@ const comps = {
       maxY: .9
     },
     paintLG: {
-      minY: 0,
+      minY: .2,
       maxY: 1
     },
     paint: {
-      minY: 0,
+      minY: .05,
       maxY: 1
     },
     flowers: {
@@ -1660,7 +1669,7 @@ class DynamicAsset {
 
 function drawItIn() {
   let frames = frameCount;
-  let framesModulo = frames % 24;
+  let framesModulo = frames % 12;
 
   push()
   let fT = fullTextureAssetIds[0]

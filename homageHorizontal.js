@@ -112,6 +112,7 @@ function sha256(ascii) {
 const hashSeed = makeHashSeed(64)
 
 console.log(hashSeed)
+var hash = sha256(hashSeed)
 //var hash = 'd206f12254b6f50a424ef53888a805e7d44886966526b5c888efe4a7c05cc6d4'
 //var hash = '2484da0c5b08a412867521e32ebe870b9fab887c292c4a66a69e5349433d4091'
 //var hash = 'a4e00ac8e89fe01c0eda1a457cece9851284556497e27875e94f7741d6f04e2a'

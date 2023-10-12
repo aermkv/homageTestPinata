@@ -114,6 +114,7 @@ const hashSeed = makeHashSeed(64)
 console.log(hashSeed)
 var hash = sha256(hashSeed)
 //var hash = '2484da0c5b08a412867521e32ebe870b9fab887c292c4a66a69e5349433d4091'
+//var hash = 'a4e00ac8e89fe01c0eda1a457cece9851284556497e27875e94f7741d6f04e2a'
 console.log(hash)
 
 const hashPairs = [];
@@ -597,8 +598,8 @@ const comps = {
     minD: 7,
     maxD: 11,
     texture: {
-      minY: .4,
-      maxY: .6
+      minY: .1,
+      maxY: .9
     },
     paintLG: {
       minY: 0,
@@ -827,6 +828,7 @@ function setup() {
   }
 
   console.log(orderedDraw)
+  console.log(orderedDraw.length)
 
 }
 
@@ -840,6 +842,7 @@ function draw() {
   ellipse(0,height,50)
   line(0,height/2,width,height/2)
   line(width/2,0,width/2,height)
+  //console.log(frameRate())
 }
 
 
@@ -959,39 +962,41 @@ function blackRoseLoad() {
 function hStandard(theme) {
   minD = comp.minD, maxD = comp.maxD;
 
-  push()
-  let fT = fullTextureAssetIds[0]
-  translate(width/2,height/2)
-  rotate(radians(90))
-  image(fT,0,0,height,width)
-  pop()
+  // push()
+  // let fT = fullTextureAssetIds[0]
+  // translate(width/2,height/2)
+  // rotate(radians(90))
+  // image(fT,0,0,height,width)
+  // pop()
 
-  // for (let i = 0; i < textureAssets.length; i++) {
-  //   let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.05),h(.95)));
-  //   let imgId = textureAssetIds[i]
-  //   let imgDiv = rnd(minD,maxD)/3
-  //   stSizeAdjust = 1;
-  //   textureAssets2.push(new PlaceAsset(imgId, pElPos, (width/imgDiv)*stSizeAdjust, (height/imgDiv/aspRatio)*stSizeAdjust))
-  //   textureAssets2[i].addToArray()
-  // }
+  for (let i = 0; i < textureAssets.length; i++) {
+    let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.05),h(.95)));
+    let imgId = textureAssetIds[i]
+    let imgDiv = rnd(minD,maxD)/3
+    stSizeAdjust = 1;
+    textureAssets2.push(new PlaceAsset(imgId, pElPos, (width/imgDiv)*stSizeAdjust, (height/imgDiv/aspRatio)*stSizeAdjust))
+    textureAssets2[i].addToArray()
+  }
 
-  // for (let i = 0; i < paintLGAssets.length; i++) {
-  //   let pElPos = createVector(rnd(0,width),rnd(h(comp.paintLG.minY),h(comp.paintLG.maxY)))
-  //   let imgId = paintLGAssetIds[i]
-  //   let imgDiv = rnd(minD,maxD)/4
-  //   stSizeAdjust = 1;
-  //   paintLGAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
-  //   paintLGAssets2[i].addToArray()
-  // }
+  for (let i = 0; i < paintLGAssets.length; i++) {
+    let pElPos = createVector(rnd(0,width),rnd(h(comp.paintLG.minY),h(comp.paintLG.maxY)))
+    let imgId = paintLGAssetIds[i]
+    let imgDiv = rnd(minD,maxD)/4
+    stSizeAdjust = 1;
+    paintLGAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
+    paintLGAssets2[i].addToArray()
+  }
 
-  // for (let i = 0; i < paintAssets.length; i++) {
-  //   let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.05),h(.95)))
-  //   let imgId = paintAssetIds[i]
-  //   let imgDiv = rnd(minD,maxD)/2
-  //   stSizeAdjust = map(pElPos.y,h(comp.paint.minY),h(comp.paint.maxY),1,1.7);
-  //   paintAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
-  //   paintAssets2[i].addToArray()
-  // }
+  for (let i = 0; i < paintAssets.length; i++) {
+    let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.05),h(.95)))
+    let imgId = paintAssetIds[i]
+    let imgDiv = rnd(minD,maxD) // /2
+    stSizeAdjust = map(pElPos.y,h(comp.paint.minY),h(comp.paint.maxY),1,1.7);
+    paintAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
+    paintAssets2[i].addToArray()
+  }
+
+  placeSocials(comp)
 
   if (theme.name === 'rococo') {
     for (let i = 0; i < flower_B_assets.length;i++) {
@@ -1016,10 +1021,18 @@ function hStandard(theme) {
       let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.05),h(.95)))
       let imgId = flowerAssetIds[i]
       let imgDiv = rnd(minD,maxD)
-      stSizeAdjust = map(pElPos.y,h(comp.flowers.minY),h(comp.flowers.maxY),1,1.7);
+      stSizeAdjust = map(pElPos.y,h(comp.flowers.minY),h(comp.flowers.maxY),.8,1.7);
       flowerAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
       flowerAssets2[i].addToArray()
     }
+  }
+
+  for (let i = 0; i < butterflyAssets2.length; i++) {
+    butterflyAssets2[i].addToArray()
+  }
+
+  for (let i = 0; i < overTopAssets2.length; i++) {
+    overTopAssets2[i].addToArray()
   }
 }
 
@@ -1472,13 +1485,14 @@ function placeSocials(comp) {
   minD = comp.minD, maxD = comp.maxD;
 
   for (let i = 0; i < socialAssets.length; i++) {
-    let pElPos = createVector(rnd(-w(.48),w(.48)),rnd(h(comp.paint.minY),h(comp.paint.maxY)))
+    let pElPos = createVector(rnd(0,width),rnd(h(comp.paint.minY),h(comp.paint.maxY)))
     let imgId = socialAssetIds[i]
     let imgDiv = rnd(minD,maxD)*2
     let bMode  = BLEND // OVERLAY;
     blendMode(bMode)
     socialAssets2.push(new PlaceAsset(imgId,pElPos,width/imgDiv,height/imgDiv/aspRatio))
-    socialAssets2[i].setItem()
+    //socialAssets2[i].setItem()
+    socialAssets2[i].addToArray()
   }
 }
 
@@ -1636,8 +1650,8 @@ class DynamicAsset {
   }
 
   fadeIn() {
-    let imgAlpha = map(frameCount,this.start,this.start+24,0,255)
-    tint(255,imgAlpha)
+    // let imgAlpha = map(frameCount,this.start,this.start+24,0,255)
+    // tint(255,imgAlpha)
     image(this.imgId,this.x,this.y,this.w,this.h)
   }
 }
@@ -1646,7 +1660,14 @@ class DynamicAsset {
 
 function drawItIn() {
   let frames = frameCount;
-  let framesModulo = frames % 10;
+  let framesModulo = frames % 24;
+
+  push()
+  let fT = fullTextureAssetIds[0]
+  translate(width/2,height/2)
+  rotate(radians(90))
+  image(fT,0,0,height,width)
+  pop()
 
   //orderedDraw[drawNum].setItem
   let a = orderedDraw[drawNum]
@@ -1664,9 +1685,10 @@ function drawItIn() {
   //   drawNum++
   // }
 
-  if (framesModulo == 0 && frames < orderedDraw.length*10) {
+  if (framesModulo == 0 && drawNum < orderedDraw.length) {
     startFrame = frameCount;
     dynamicAssets.push(new DynamicAsset(a[0],a[1],a[2],a[3],a[4],startFrame))
+    console.log(drawNum)
     drawNum++
   }
 }

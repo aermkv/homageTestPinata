@@ -113,10 +113,13 @@ const hashSeed = makeHashSeed(64)
 
 console.log(hashSeed)
 var hash = sha256(hashSeed)
+//var hash = '286688c1805e5ce37a5f82111de55a71b04dd6865196bafbe0f7fd4bdc312036'
 //var hash = 'd206f12254b6f50a424ef53888a805e7d44886966526b5c888efe4a7c05cc6d4'
 //var hash = '2484da0c5b08a412867521e32ebe870b9fab887c292c4a66a69e5349433d4091'
 //var hash = 'a4e00ac8e89fe01c0eda1a457cece9851284556497e27875e94f7741d6f04e2a'
 //var hash = 'b1bea3f40018246e0863ec91b3fe210728e88c16a2a19d2ef016c3e3598b97b7'
+//var hash = 'ef3b56a016b0ed3cb2b79bfc5f855ed15e29eb769a0a91214511818867b4386e' // horizon helps 3D sense
+//var hash = 'ea758583ef52d668b9f73cf61826a3ecfe685d7a2d0e0dfe2d5a95d0a01ac218' // good cmyk output
 console.log(hash)
 
 const hashPairs = [];
@@ -342,7 +345,7 @@ const themes = {
     flowers: {
       fileLocation: directory + '/_digital/flowers',
       // num: 8,
-      num: 12,
+      num: 15,
       maxNum: 42
     },
     bigFlowers: {
@@ -358,12 +361,12 @@ const themes = {
     },
     paintLG: {
       fileLocation: directory + '/_digital/paintLG',
-      num: 6,
+      num: 7,
       maxNum: 17
     },
     texture: {
       fileLocation: directory + '/_digital/textures',
-      num: 4,
+      num: 5,
       maxNum: 17
     },
     fullTexture: {
@@ -413,8 +416,8 @@ const themes = {
     flowers: {
       fileLocation: directory + '/_cmyk/flowers',
       // num: 10,
-      num: 15,
-      maxNum: 36
+      num: 16,
+      maxNum: 35
     },
     bigFlowers: {
       fileLocation: directory + '/_cmyk/bigFlowers',
@@ -424,7 +427,7 @@ const themes = {
     paint: {
       fileLocation: directory + '/_cmyk/paint',
       // num: 12,
-      num: 16,
+      num: 18,
       maxNum: 51
     },
     paint2: {
@@ -434,13 +437,13 @@ const themes = {
     },
     paintLG: {
       fileLocation: directory + '/_cmyk/paintLG',
-      num: 6,
+      num: 7,
       maxNum: 32
     },
     texture: {
       fileLocation: directory + '/_cmyk/textures',
-      num: 4,
-      maxNum: 17
+      num: 5,
+      maxNum: 18
     },
     fullTexture: {
       fileLocation: directory + '/_cmyk/fullTextures',
@@ -498,12 +501,12 @@ const themes = {
     },
     paintLG: {
       fileLocation: directory + '/_allWhite/paintLG',
-      num: 6,
+      num: 7,
       maxNum: 19
     },
     texture: {
       fileLocation: directory + '/_allWhite/textures',
-      num: 4,
+      num: 5,
       maxNum: 10
     },
     fullTexture: {
@@ -545,7 +548,7 @@ const themes = {
     flowers: {
       fileLocation: directory + '/_graphic/flowers',
       // num: 10,
-      num: 15,
+      num: 17,
       maxNum: 31
     },
     bigFlowers: {
@@ -556,17 +559,17 @@ const themes = {
     paint: {
       fileLocation: directory + '/_graphic/paint',
       // num: 9,
-      num: 12,
+      num: 16,
       maxNum: 60
     },
     paintLG: {
       fileLocation: directory + '/_graphic/paintLG',
-      num: 3,
+      num: 6,
       maxNum: 33
     },
     texture: {
       fileLocation: directory + '/_graphic/textures',
-      num: 2,
+      num: 4,
       maxNum: 14
     },
     fullTexture: {
@@ -605,8 +608,8 @@ const themes = {
 const comps = {
   horizontal: {
     name: 'horizontal',
-    minD: 7,
-    maxD: 11,
+    minD: 6,
+    maxD: 10,
     texture: {
       minY: .1,
       maxY: .9
@@ -765,35 +768,36 @@ function preload() {
 
   socials = map(decPairs[3],0,255,0,1);
   if (socials < .5) {
-    numSocials = 0
+    numSocials = 3
   }else if (socials < .85) {
-    numSocials = 5
+    numSocials = 6
   }else{
     numSocials = 12
   }
   socialsLoad(numSocials)
-  console.log('num socials' + numSocials)
+  console.log('num socials ' + numSocials)
 
   butterflies = map(decPairs[4],0,255,0,1);
   if (butterflies < .7) {
-    numButts = 0
+    numButts = 3
   }else if (socials < .94) {
-    numButts = 5
+    numButts = 6
   }else{
     numButts = 12
   }
   butterfliesLoad(numButts)
-  console.log('num butterflies' + numButts)
+  console.log('num butterflies ' + numButts)
 
   overTops = map(decPairs[5],0,255,0,1);
   if (overTops < .5) {
-    numOverTop = 0
+    numOverTop = 2
   }else if (overTops < .85) {
-    numOverTop = 3
+    numOverTop = 4
   }else{
-    numOverTop = 6
+    numOverTop = 7
   }
   overTopLoad(numOverTop)
+  console.log('num overTops ' + numOverTop)
 
   hasBlackRose = map(decPairs[6],0,255,0,1);
   if (hasBlackRose < .03) {
@@ -845,13 +849,13 @@ function setup() {
 function draw() {
   drawItIn()
   activateDynamicAssets()
-  ellipse(0,0,50)
-  ellipse(w(.5),h(.5),50)
-  ellipse(width,height,50)
-  ellipse(width,0,50)
-  ellipse(0,height,50)
-  line(0,height/2,width,height/2)
-  line(width/2,0,width/2,height)
+  // ellipse(0,0,50)
+  // ellipse(w(.5),h(.5),50)
+  // ellipse(width,height,50)
+  // ellipse(width,0,50)
+  // ellipse(0,height,50)
+  // line(0,height/2,width,height/2)
+  // line(width/2,0,width/2,height)
   //console.log(frameRate())
 }
 
@@ -1015,19 +1019,25 @@ function hStandard(theme) {
       let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.05),h(.95)))
       let imgId = flowerAssetIds[i]
       let imgDiv = rnd(minD,maxD)
-      stSizeAdjust = map(pElPos.y,h(comp.flowers.minY),h(comp.flowers.maxY),.8,1.7);
+      stSizeAdjust = map(pElPos.y,h(comp.flowers.minY),h(comp.flowers.maxY),.8,3);
       flowerAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
       flowerAssets2[i].addToArray()
     }
   }
 
-  for (let i = 0; i < butterflyAssets2.length; i++) {
-    butterflyAssets2[i].addToArray()
-  }
+  placeButterflies(comp)
 
-  for (let i = 0; i < overTopAssets2.length; i++) {
-    overTopAssets2[i].addToArray()
-  }
+  placeOverTop(comp)
+
+  // for (let i = 0; i < butterflyAssets2.length; i++) {
+  //   // nees to create new PlaceAsset
+  //   butterflyAssets2[i].addToArray()
+  // }
+
+  // for (let i = 0; i < overTopAssets2.length; i++) {
+  //   // nees to create new PlaceAsset
+  //   overTopAssets2[i].addToArray()
+  // }
 }
 
 function standard(comp,theme) {
@@ -1494,13 +1504,14 @@ function placeButterflies(comp) {
   minD = comp.minD, maxD = comp.maxD;
 
   for (let i = 0; i < butterflyAssets.length; i++) {
-    let pElPos = createVector(rnd(-w(.48),w(.48)),rnd(-h(.48),h(.48)))
+    let pElPos = createVector(rnd(0,width),rnd(0,height))
     let imgId = butterflyAssetIds[i]
     let imgDiv = rnd(minD,maxD) / 1.35 //*2
     let bMode  = BLEND // OVERLAY;
     blendMode(bMode)
     butterflyAssets2.push(new PlaceAsset(imgId,pElPos,width/imgDiv,height/imgDiv/aspRatio))
-    butterflyAssets2[i].setItem()
+    // butterflyAssets2[i].setItem()
+    butterflyAssets2[i].addToArray()
   }
 }
 
@@ -1508,18 +1519,19 @@ function placeOverTop(comp) {
   minD = comp.minD, maxD = comp.maxD;
 
   for (let i = 0; i < overTopAssets.length; i++) {
-    if (overTopAssets.length > 4) {
-      posY = map(i,0,overTopAssets.length,-h(.35),h(.35)) + rnd(-h(.1),h(.1))
+    if (overTopAssets.length >= 4) {
+      posX = map(i,0,overTopAssets.length,w(.15),w(.85)) + rnd(-w(.1),w(.1))
     }else{
-      posY = map(i,0,overTopAssets.length,-h(.35),h(.35)) + rnd(-h(.2),h(.2))
+      posX = map(i,0,overTopAssets.length,w(.25),w(.75)) + rnd(-w(.2),w(.2))
     }
-    let pElPos = createVector(rnd(-w(.32),w(.32)),posY)
+    let pElPos = createVector(posX,rnd(h(.15),h(.85)))
     let imgId = overTopAssetIds[i]
     let imgDiv = rnd(minD,maxD)/3//*2
     let bMode  = BLEND // OVERLAY;
     blendMode(bMode)
     overTopAssets2.push(new PlaceAsset(imgId,pElPos,width/imgDiv,height/imgDiv/aspRatio))
-    overTopAssets2[i].setItem()
+    // overTopAssets2[i].setItem()
+    overTopAssets2[i].addToArray()
   }
 }
 

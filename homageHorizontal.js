@@ -164,11 +164,13 @@ function h(val) {if (val == null) return height;return height * val;}
 const depData = {
 	externalAssetDependencies: [
 	  {
-    cid: "QmXZAMSbkVg2mBLaFBSz7JU8KVbdP61kiBJuBczFuhWjES",
+    // cid: "QmXZAMSbkVg2mBLaFBSz7JU8KVbdP61kiBJuBczFuhWjES",
+    cid: "QmcLyeGKHwTESLeHK8PtynsiMK4ySbovXF67vHwtd4XAXa",
 		dependency_type: "ipfs"
 	  },
 	],
-  preferredIPFSGateway:"https://black-indirect-dragon-602.mypinata.cloud"
+  // preferredIPFSGateway:"https://black-indirect-dragon-602.mypinata.cloud"
+  preferredIPFSGateway:"https://proj.myfilebase.com"
 }
 
 ///// mimicking tD object for ipfs test
@@ -333,77 +335,77 @@ const themes = {
   //   }
   // },
 
-  digital: {
-    name: 'digital',
-    bgColors: {
-      bgCol1: [227,48,35],
-      bgCol2: [0,32,237],
-      bgCol2: [113,241,74],
-      bgCol4: [0,0,0],
-      bgCol5: [255,255,0]
-    },
-    flowers: {
-      fileLocation: directory + '/_digital/flowers',
-      // num: 8,
-      num: 15,
-      maxNum: 42
-    },
-    bigFlowers: {
-      fileLocation: directory + '/_digital/bigFlowers',
-      num: 1,
-      maxNum: 7
-    },
-    paint: {
-      fileLocation: directory + '/_digital/paint',
-      // num: 12,
-      num: 16,
-      maxNum: 18
-    },
-    paintLG: {
-      fileLocation: directory + '/_digital/paintLG',
-      num: 7,
-      maxNum: 17
-    },
-    texture: {
-      fileLocation: directory + '/_digital/textures',
-      num: 5,
-      maxNum: 17
-    },
-    fullTexture: {
-      fileLocation: directory + '/_digital/fullTextures',
-      maxNum: 21
-    },
-    ovTexture: {
-      fileLocation: directory + '/_digital/overlayTextures',
-      maxNum: 3
-    },
-    floor: {
-      fileLocation: directory + '/_digital/floors',
-      num: 1,
-      maxNum: 6
-    },
-    vase: {
-      fileLocation: directory + '/_digital/vases',
-      num: 1,
-      maxNum: 6
-    },
-    vaseFlowersB: {
-      fileLocation: directory + '/_digital/vaseFlowers/_B',
-      num: 1,
-      maxNum: 5
-    },
-    vaseFlowersF: {
-      fileLocation: directory + '/_digital/vaseFlowers/_F',
-      num: 2,
-      maxNum: 7
-    },
-    colors: {
-      a: [80,59,128],
-      b: [149,63,110],
-      c: [219,80,119],
-      d: [242,167,107]
-    }
-  },
+  // digital: {
+  //   name: 'digital',
+  //   bgColors: {
+  //     bgCol1: [227,48,35],
+  //     bgCol2: [0,32,237],
+  //     bgCol2: [113,241,74],
+  //     bgCol4: [0,0,0],
+  //     bgCol5: [255,255,0]
+  //   },
+  //   flowers: {
+  //     fileLocation: directory + '/_digital/flowers',
+  //     // num: 8,
+  //     num: 15,
+  //     maxNum: 42
+  //   },
+  //   bigFlowers: {
+  //     fileLocation: directory + '/_digital/bigFlowers',
+  //     num: 1,
+  //     maxNum: 7
+  //   },
+  //   paint: {
+  //     fileLocation: directory + '/_digital/paint',
+  //     // num: 12,
+  //     num: 16,
+  //     maxNum: 18
+  //   },
+  //   paintLG: {
+  //     fileLocation: directory + '/_digital/paintLG',
+  //     num: 7,
+  //     maxNum: 17
+  //   },
+  //   texture: {
+  //     fileLocation: directory + '/_digital/textures',
+  //     num: 5,
+  //     maxNum: 17
+  //   },
+  //   fullTexture: {
+  //     fileLocation: directory + '/_digital/fullTextures',
+  //     maxNum: 21
+  //   },
+  //   ovTexture: {
+  //     fileLocation: directory + '/_digital/overlayTextures',
+  //     maxNum: 3
+  //   },
+  //   floor: {
+  //     fileLocation: directory + '/_digital/floors',
+  //     num: 1,
+  //     maxNum: 6
+  //   },
+  //   vase: {
+  //     fileLocation: directory + '/_digital/vases',
+  //     num: 1,
+  //     maxNum: 6
+  //   },
+  //   vaseFlowersB: {
+  //     fileLocation: directory + '/_digital/vaseFlowers/_B',
+  //     num: 1,
+  //     maxNum: 5
+  //   },
+  //   vaseFlowersF: {
+  //     fileLocation: directory + '/_digital/vaseFlowers/_F',
+  //     num: 2,
+  //     maxNum: 7
+  //   },
+  //   colors: {
+  //     a: [80,59,128],
+  //     b: [149,63,110],
+  //     c: [219,80,119],
+  //     d: [242,167,107]
+  //   }
+  // },
 
   cmyk: {
     name: 'cmyk',
@@ -486,7 +488,7 @@ const themes = {
       fileLocation: directory + '/_allWhite/flowers',
       // num: 20,
       num: 28,
-      maxNum: 38
+      maxNum: 40
     },
     bigFlowers: {
       fileLocation: directory + '/_allWhite/bigFlowers',
@@ -502,7 +504,7 @@ const themes = {
     paintLG: {
       fileLocation: directory + '/_allWhite/paintLG',
       num: 7,
-      maxNum: 19
+      maxNum: 21
     },
     texture: {
       fileLocation: directory + '/_allWhite/textures',
@@ -570,7 +572,7 @@ const themes = {
     texture: {
       fileLocation: directory + '/_graphic/textures',
       num: 4,
-      maxNum: 14
+      maxNum: 16
     },
     fullTexture: {
       fileLocation: directory + '/_graphic/fullTextures',
@@ -881,15 +883,15 @@ function loadRandomAssets(num,maxNum,baseArray,fileLoc,fileNameConvention,type,i
 }
 
 function standardLoad(comp,theme,ovTex) {
-  if (comp.name === 'lowDensity') {
-    fullTextureAssets.push(new LoadAsset(directory + '/_' + theme.name + '/' + 'lowD_fT','lowD_fT_',1,'none',fullTextureAssetIds))
-    fullTextureAssets[0].load()
-  }else{
+  // if (comp.name === 'lowDensity') {
+  //   fullTextureAssets.push(new LoadAsset(directory + '/_' + theme.name + '/' + 'lowD_fT','lowD_fT_',1,'none',fullTextureAssetIds))
+  //   fullTextureAssets[0].load()
+  // }else{
     let maxFullTextureId = theme.fullTexture.maxNum;
     let fullTextureId = floor(map(decPairs[21],0,255,1,maxFullTextureId-.1));
-    fullTextureAssets.push(new LoadAsset(theme.fullTexture.fileLocation,'fT_',fullTextureId,'none',fullTextureAssetIds))
+    fullTextureAssets.push(new LoadAsset(directory + '/_fullTextures','fT_',fullTextureId,'none',fullTextureAssetIds))
     fullTextureAssets[0].load()
-  }
+  // }
 
 
   // textures
@@ -935,7 +937,7 @@ function standardLoad(comp,theme,ovTex) {
 
 
 function socialsLoad(numSocials) {
-  maxNumSocials = 24
+  maxNumSocials = 25
   loadRandomAssets(numSocials, maxNumSocials, socialAssets, directory + '/socials', 'social_', 'none', socialAssetIds)
 }
 

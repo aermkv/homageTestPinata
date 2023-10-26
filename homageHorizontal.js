@@ -112,7 +112,9 @@ function sha256(ascii) {
 const hashSeed = makeHashSeed(64)
 
 console.log(hashSeed)
-var hash = sha256(hashSeed)
+//var hash = sha256(hashSeed)
+var hash = 'c4c79742a29c7eee9b763de8ea2bc6d23ea4f2c2aa1a010e318c5b591fbb3ec5'
+//var hash = '46bfa1f354a7aaeac50db7c429918af179d2492e35b6c053497b866f0e91807a'
 //var hash = '286688c1805e5ce37a5f82111de55a71b04dd6865196bafbe0f7fd4bdc312036'
 //var hash = 'd206f12254b6f50a424ef53888a805e7d44886966526b5c888efe4a7c05cc6d4'
 //var hash = '2484da0c5b08a412867521e32ebe870b9fab887c292c4a66a69e5349433d4091'
@@ -165,7 +167,10 @@ const depData = {
 	externalAssetDependencies: [
 	  {
     // cid: "QmXZAMSbkVg2mBLaFBSz7JU8KVbdP61kiBJuBczFuhWjES",
-    cid: "QmcLyeGKHwTESLeHK8PtynsiMK4ySbovXF67vHwtd4XAXa",
+    // new filebase CiD
+    // cid: "QmcLyeGKHwTESLeHK8PtynsiMK4ySbovXF67vHwtd4XAXa",
+    // updated filebase cid:
+    cid: "QmW6iLdCHEeJcidjjfKyfo6KYaMiHYK2TxBQAj5TBs3NxA",
 		dependency_type: "ipfs"
 	  },
 	],
@@ -190,223 +195,6 @@ let newThemes = {
 }
 
 const themes = {
-  // rococo: {
-  //   name: 'rococo',
-  //   bgColors: {
-  //     bgCol1: [200,222,252],
-  //     bgCol2: [252,195,203],
-  //     bgCol2: [255,255,212],
-  //     bgCol4: [245,227,130]
-  //   },
-  //   flowers_B: {
-  //     fileLocation: directory + '/_rococo/flowers_B',
-  //     num: 9,
-  //     maxNum: 32
-  //   },
-  //   flowers_F: {
-  //     fileLocation: directory + '/_rococo/flowers_F',
-  //     num: 20,
-  //     maxNum: 60
-  //   },
-  //   flowers: {
-  //     fileLocation: directory + '/_rococo/flowers',
-  //     num: 10,
-  //     maxNum: 12
-  //   },
-  //   bigFlowers: {
-  //     fileLocation: directory + '/_rococo/bigFlowers',
-  //     num: 1,
-  //     maxNum: 9
-  //   },
-  //   paint: {
-  //     fileLocation: directory + '/_rococo/paint',
-  //     num: 6,
-  //     maxNum: 14
-  //   },
-  //   paintLG: {
-  //     fileLocation: directory + '/_rococo/paintLG',
-  //     num: 4,
-  //     maxNum: 9
-  //   },
-  //   texture: {
-  //     fileLocation: directory + '/_rococo/textures',
-  //     num: 4,
-  //     maxNum: 14
-  //   },
-  //   fullTexture: {
-  //     fileLocation: directory + '/_rococo/fullTextures',
-  //     maxNum: 36
-  //   },
-  //   floor: {
-  //     fileLocation: directory + '/_rococo/floors',
-  //     num: 1,
-  //     maxNum: 12
-  //   },
-  //   vase: {
-  //     fileLocation: directory + '/_rococo/vases',
-  //     num: 1,
-  //     maxNum: 13
-  //   },
-  //   vaseFlowersB: {
-  //     fileLocation: directory + '/_rococo/vaseFlowers/_B',
-  //     num: 1,
-  //     maxNum: 10
-  //   },
-  //   vaseFlowersF: {
-  //     fileLocation: directory + '/_rococo/vaseFlowers/_F',
-  //     num: 2,
-  //     maxNum: 14
-  //   },
-  //   colors: {
-  //     a: [200,222,252],
-  //     b: [251,234,236],
-  //     c: [254,255,235],
-  //     d: [245,227,130]
-  //   }
-  // },
-
-  // countryGarden: {
-  //   name: 'countryGarden',
-  //   bgColors: {
-  //     bgCol1: [242,231,227],
-  //     bgCol2: [224,203,166],
-  //     bgCol2: [138,133,105],
-  //     bgCol4: [187,180,193]
-  //   },
-  //   flowers_B: {
-  //     fileLocation: directory + '/_countryGarden/flowers_B',
-  //     num: 9,
-  //     maxNum: 50
-  //   },
-  //   flowers_F: {
-  //     fileLocation: directory + '/_countryGarden/flowers_F',
-  //     num: 20,
-  //     maxNum: 48
-  //   },
-  //   bigFlowers: {
-  //     fileLocation: directory + '/_countryGarden/bigFlowers',
-  //     num: 1,
-  //     maxNum: 4
-  //   },
-  //   paint: {
-  //     fileLocation: directory + '/_countryGarden/paint',
-  //     num: 10,
-  //     maxNum: 34
-  //   },
-  //   paintLG: {
-  //     fileLocation: directory + '/_countryGarden/paintLG',
-  //     num: 5,
-  //     maxNum: 12
-  //   },
-  //   texture: {
-  //     fileLocation: directory + '/_countryGarden/textures',
-  //     num: 6,
-  //     maxNum: 15
-  //   },
-  //   fullTexture: {
-  //     fileLocation: directory + '/_countryGarden/fullTextures',
-  //     maxNum: 12
-  //   },
-  //   floor: {
-  //     fileLocation: directory + '/_countryGarden/floors',
-  //     num: 1,
-  //     maxNum: 5
-  //   },
-  //   vase: {
-  //     fileLocation: directory + '/_countryGarden/vases',
-  //     num: 1,
-  //     maxNum: 13
-  //   },
-  //   vaseFlowersB: {
-  //     fileLocation: directory + '/_countryGarden/vaseFlowers/_B',
-  //     num: 1,
-  //     maxNum: 7
-  //   },
-  //   vaseFlowersF: {
-  //     fileLocation: directory + '/_countryGarden/vaseFlowers/_F',
-  //     num: 2,
-  //     maxNum: 7
-  //   },
-  //   colors: {
-  //     a: [85,113,131],
-  //     b: [164,205,163],
-  //     c: [216,180,227],
-  //     d: [225,227,180]
-  //   }
-  // },
-
-  // digital: {
-  //   name: 'digital',
-  //   bgColors: {
-  //     bgCol1: [227,48,35],
-  //     bgCol2: [0,32,237],
-  //     bgCol2: [113,241,74],
-  //     bgCol4: [0,0,0],
-  //     bgCol5: [255,255,0]
-  //   },
-  //   flowers: {
-  //     fileLocation: directory + '/_digital/flowers',
-  //     // num: 8,
-  //     num: 15,
-  //     maxNum: 42
-  //   },
-  //   bigFlowers: {
-  //     fileLocation: directory + '/_digital/bigFlowers',
-  //     num: 1,
-  //     maxNum: 7
-  //   },
-  //   paint: {
-  //     fileLocation: directory + '/_digital/paint',
-  //     // num: 12,
-  //     num: 16,
-  //     maxNum: 18
-  //   },
-  //   paintLG: {
-  //     fileLocation: directory + '/_digital/paintLG',
-  //     num: 7,
-  //     maxNum: 17
-  //   },
-  //   texture: {
-  //     fileLocation: directory + '/_digital/textures',
-  //     num: 5,
-  //     maxNum: 17
-  //   },
-  //   fullTexture: {
-  //     fileLocation: directory + '/_digital/fullTextures',
-  //     maxNum: 21
-  //   },
-  //   ovTexture: {
-  //     fileLocation: directory + '/_digital/overlayTextures',
-  //     maxNum: 3
-  //   },
-  //   floor: {
-  //     fileLocation: directory + '/_digital/floors',
-  //     num: 1,
-  //     maxNum: 6
-  //   },
-  //   vase: {
-  //     fileLocation: directory + '/_digital/vases',
-  //     num: 1,
-  //     maxNum: 6
-  //   },
-  //   vaseFlowersB: {
-  //     fileLocation: directory + '/_digital/vaseFlowers/_B',
-  //     num: 1,
-  //     maxNum: 5
-  //   },
-  //   vaseFlowersF: {
-  //     fileLocation: directory + '/_digital/vaseFlowers/_F',
-  //     num: 2,
-  //     maxNum: 7
-  //   },
-  //   colors: {
-  //     a: [80,59,128],
-  //     b: [149,63,110],
-  //     c: [219,80,119],
-  //     d: [242,167,107]
-  //   }
-  // },
-
   cmyk: {
     name: 'cmyk',
     bgColors: {
@@ -604,7 +392,82 @@ const themes = {
       c: [236,151,122],
       d: [86,84,81]
     }
-  }
+  },
+
+  rococo: {
+    name: 'rococo',
+    bgColors: {
+      bgCol1: [200,222,252],
+      bgCol2: [252,195,203],
+      bgCol2: [255,255,212],
+      bgCol4: [245,227,130]
+    },
+    flowers_B: {
+      fileLocation: directory + '/_rococo/flowers_B',
+      num: 9,
+      maxNum: 32
+    },
+    flowers_F: {
+      fileLocation: directory + '/_rococo/flowers_F',
+      num: 20,
+      maxNum: 60
+    },
+    flowers: {
+      fileLocation: directory + '/_rococo/flowers',
+      num: 10,
+      maxNum: 12
+    },
+    bigFlowers: {
+      fileLocation: directory + '/_rococo/bigFlowers',
+      num: 1,
+      maxNum: 9
+    },
+    paint: {
+      fileLocation: directory + '/_rococo/paint',
+      num: 6,
+      maxNum: 14
+    },
+    paintLG: {
+      fileLocation: directory + '/_rococo/paintLG',
+      num: 4,
+      maxNum: 9
+    },
+    texture: {
+      fileLocation: directory + '/_rococo/textures',
+      num: 4,
+      maxNum: 14
+    },
+    fullTexture: {
+      fileLocation: directory + '/_rococo/fullTextures',
+      maxNum: 36
+    },
+    floor: {
+      fileLocation: directory + '/_rococo/floors',
+      num: 1,
+      maxNum: 12
+    },
+    vase: {
+      fileLocation: directory + '/_rococo/vases',
+      num: 1,
+      maxNum: 13
+    },
+    vaseFlowersB: {
+      fileLocation: directory + '/_rococo/vaseFlowers/_B',
+      num: 1,
+      maxNum: 10
+    },
+    vaseFlowersF: {
+      fileLocation: directory + '/_rococo/vaseFlowers/_F',
+      num: 2,
+      maxNum: 14
+    },
+    colors: {
+      a: [200,222,252],
+      b: [251,234,236],
+      c: [254,255,235],
+      d: [245,227,130]
+    }
+  },
 }
 
 const comps = {
@@ -826,6 +689,8 @@ function setup() {
 
   imageMode(CENTER);
 
+  console.log(flower_B_Assets)
+
   if (comp.name === 'stillLife') {
     // stillLife(comp,theme,hasBlackRose)
   }else{
@@ -889,7 +754,9 @@ function standardLoad(comp,theme,ovTex) {
   // }else{
     let maxFullTextureId = theme.fullTexture.maxNum;
     let fullTextureId = floor(map(decPairs[21],0,255,1,maxFullTextureId-.1));
-    fullTextureAssets.push(new LoadAsset(directory + '/_fullTextures','fT_',fullTextureId,'none',fullTextureAssetIds))
+    //fullTextureAssets.push(new LoadAsset(directory + '/_fullTextures','fT_',fullTextureId,'none',fullTextureAssetIds))
+    fullTextureAssets.push(new LoadAsset(directory + '/_' + theme.name + '/fullTextures','fT_',fullTextureId,'none',fullTextureAssetIds))
+    // fullTextureAssets.push(new LoadAsset(directory + '/_' + theme.name + '/' + 'lowD_fT','lowD_fT_',1,'none',fullTextureAssetIds))
     fullTextureAssets[0].load()
   // }
 
@@ -999,8 +866,8 @@ function hStandard(theme) {
   placeSocials(comp)
 
   if (theme.name === 'rococo') {
-    for (let i = 0; i < flower_B_assets.length;i++) {
-      let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.05),h(.95)))
+    for (let i = 0; i < flower_B_Assets.length; i++) {
+      let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.1),h(.95)))
       let imgId = flower_B_AssetIds[i]
       let imgDiv = rnd(minD,maxD)
       stSizeAdjust = map(pElPos.y,h(comp.flowers_B.minY),h(comp.flowers_B.maxY),1.3,1.8);
@@ -1008,20 +875,22 @@ function hStandard(theme) {
       flower_B_Assets2[i].addToArray()
     }
     for (let i = 0; i < flower_F_Assets.length; i++) {
-      let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.05),h(.95)))
+      let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.2),h(1)))
       let imgId = flower_F_AssetIds[i]
       let imgDiv = rnd(minD,maxD)*1.2
-      stSizeAdjust = map(pElPos.y,h(comp.flowers_F.minY),h(comp.flowers_F.maxY),1,1.7);
+      // stSizeAdjust = map(pElPos.y,h(comp.flowers_F.minY),h(comp.flowers_F.maxY),1,1.7);
+      stSizeAdjust = map(pElPos.y,h(.2),h(1),.8,1.8)
       flower_F_Assets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
       flower_F_Assets2[i].addToArray()
     }
   }else{
     console.log('num flowers: ' + flowerAssets.length)
     for (let i = 0; i < flowerAssets.length; i++) {
-      let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.05),h(.95)))
+      let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.1),h(1)))
       let imgId = flowerAssetIds[i]
       let imgDiv = rnd(minD,maxD)
-      stSizeAdjust = map(pElPos.y,h(comp.flowers.minY),h(comp.flowers.maxY),.8,3);
+      // stSizeAdjust = map(pElPos.y,h(comp.flowers.minY),h(comp.flowers.maxY),.8,3);
+      stSizeAdjust = map(pElPos.y,h(.1),h(1),.8,1.8)
       flowerAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
       flowerAssets2[i].addToArray()
     }

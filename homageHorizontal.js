@@ -162,7 +162,7 @@ function rnd(min, max) {
 function w(val) {if (val == null) return width;return width * val;}
 function h(val) {if (val == null) return height;return height * val;}
 
-/// fake tD object to test ipfs connection
+/ fake tD object to test ipfs connection
 const depData = {
 	externalAssetDependencies: [
 	  {
@@ -170,13 +170,19 @@ const depData = {
     // new filebase CiD
     // cid: "QmcLyeGKHwTESLeHK8PtynsiMK4ySbovXF67vHwtd4XAXa",
     // updated filebase cid:
-    cid: "QmW6iLdCHEeJcidjjfKyfo6KYaMiHYK2TxBQAj5TBs3NxA",
+    // cid: "QmW6iLdCHEeJcidjjfKyfo6KYaMiHYK2TxBQAj5TBs3NxA",
+    // updated filebase cid 9/12/2024:
+    cid: "bafybeifnfexjur7sizvxzjuvb7tusu5wwqktbwgt7s2boh73apn5pmvdbq",
+	
 		dependency_type: "ipfs"
 	  },
 	],
   // preferredIPFSGateway:"https://black-indirect-dragon-602.mypinata.cloud"
-  preferredIPFSGateway:"https://proj.myfilebase.com"
+  // preferredIPFSGateway:"https://proj.myfilebase.com"
+  preferredIPFSGateway:"homage2024.myfilebase.com"
 }
+
+
 
 ///// mimicking tD object for ipfs test
 const gateway = depData.preferredIPFSGateway;

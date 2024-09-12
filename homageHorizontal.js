@@ -190,7 +190,7 @@ const content = depData.externalAssetDependencies[0].cid;
 const hostType = depData.externalAssetDependencies[0].dependency_type;
 
 const directory = gateway + '/' + hostType + '/' + content;
-console.log('directory: ' directory)
+console.log('directory: ' + directory)
 
 let newThemes = {
   rococo: 'rococo',

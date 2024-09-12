@@ -162,7 +162,7 @@ function rnd(min, max) {
 function w(val) {if (val == null) return width;return width * val;}
 function h(val) {if (val == null) return height;return height * val;}
 
-/ fake tD object to test ipfs connection
+// fake tD object to test ipfs connection
 const depData = {
 	externalAssetDependencies: [
 	  {

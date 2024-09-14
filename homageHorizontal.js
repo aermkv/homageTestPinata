@@ -172,7 +172,7 @@ const depData = {
     // updated filebase cid:
     // cid: "QmW6iLdCHEeJcidjjfKyfo6KYaMiHYK2TxBQAj5TBs3NxA",
     // updated filebase cid 9/12/2024:
-    cid: "bafybeiefdwkgejuzzbb7ujlvb5kpimvnfy6ocijcr2tlxqxvcgymejer6i",
+    cid: "bafybeiesua62ncqyb65gjm2kgna4xcrrr7sdufcdejyentytdky2k2q4q4",
 	
 		dependency_type: "ipfs"
 	  },

@@ -123,12 +123,9 @@ function sha256(ascii) {
 };
 
 const hashSeed = makeHashSeed(64)
-// const hash = '0x' + getHash(hashSeed).then(hex)
-
-// const hash = makeHash(hashSeed)
+var hash = sha256(hashSeed)
 
 console.log(hashSeed)
-// var hash = sha256(hashSeed)
 console.log(hash)
 
 const hashPairs = [];

@@ -723,6 +723,11 @@ function setup() {
 function draw() {
   // drawItIn()
   // activateDynamicAssets()
+
+	// To re-enable dynamic drawing-in of assets, enable above functions
+	// Replace all active setItem() method calls with addToArray()
+
+	
   // ellipse(0,0,50)
   // ellipse(w(.5),h(.5),50)
   // ellipse(width,height,50)
@@ -849,7 +854,8 @@ function hStandard(theme) {
     let imgDiv = rnd(minD,maxD)/3
     stSizeAdjust = 1;
     textureAssets2.push(new PlaceAsset(imgId, pElPos, (width/imgDiv)*stSizeAdjust, (height/imgDiv/aspRatio)*stSizeAdjust))
-    textureAssets2[i].addToArray()
+    // textureAssets2[i].addToArray()
+    textureAssets2[i].setItem()
   }
 
   for (let i = 0; i < paintLGAssets.length; i++) {
@@ -858,7 +864,8 @@ function hStandard(theme) {
     let imgDiv = rnd(minD,maxD)/4
     stSizeAdjust = 1;
     paintLGAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
-    paintLGAssets2[i].addToArray()
+    // paintLGAssets2[i].addToArray()
+    paintLGAssets2[i].setItem()
   }
 
   for (let i = 0; i < paintAssets.length; i++) {
@@ -867,7 +874,8 @@ function hStandard(theme) {
     let imgDiv = rnd(minD,maxD) // /2
     stSizeAdjust = map(pElPos.y,h(comp.paint.minY),h(comp.paint.maxY),1,1.7);
     paintAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
-    paintAssets2[i].addToArray()
+    // paintAssets2[i].addToArray()
+    paintAssets2[i].setItem()
   }
 
   placeSocials(comp)
@@ -879,7 +887,7 @@ function hStandard(theme) {
       let imgDiv = rnd(minD,maxD)
       stSizeAdjust = map(pElPos.y,h(comp.flowers_B.minY),h(comp.flowers_B.maxY),1.3,1.8);
       flower_B_Assets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
-      flower_B_Assets2[i].addToArray()
+      flower_B_Assets2[i].setItem()
     }
     for (let i = 0; i < flower_F_Assets.length; i++) {
       let pElPos = createVector(rnd(w(.05),w(.95)),rnd(h(.2),h(1)))
@@ -888,7 +896,7 @@ function hStandard(theme) {
       // stSizeAdjust = map(pElPos.y,h(comp.flowers_F.minY),h(comp.flowers_F.maxY),1,1.7);
       stSizeAdjust = map(pElPos.y,h(.2),h(1),.8,1.8)
       flower_F_Assets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
-      flower_F_Assets2[i].addToArray()
+      flower_F_Assets2[i].setItem()
     }
   }else{
     console.log('num flowers: ' + flowerAssets.length)
@@ -899,7 +907,7 @@ function hStandard(theme) {
       // stSizeAdjust = map(pElPos.y,h(comp.flowers.minY),h(comp.flowers.maxY),.8,3);
       stSizeAdjust = map(pElPos.y,h(.1),h(1),.8,1.8)
       flowerAssets2.push(new PlaceAsset(imgId,pElPos,(width/imgDiv)*stSizeAdjust,(height/imgDiv/aspRatio)*stSizeAdjust))
-      flowerAssets2[i].addToArray()
+      flowerAssets2[i].setItem()
     }
   }
 
@@ -1254,7 +1262,7 @@ function standardLayer1() {
 
   for (let i = 0; i < paintLGAssets2.length; i++) {
     paintLGAssets2[i].setItem()
-    paintLGAssets2[i].addToArray()
+    // paintLGAssets2[i].addToArray()
   }
 }
 
@@ -1265,23 +1273,23 @@ function standardLayer2() {
   if (comp.name === 'dominant' || comp.name === 'lowDensity') {
     for (let i = 0; i < paintArraysplit; i++) {
       paintAssets2[i].setItem()
-      paintAssets2[i].addToArray()
+      // paintAssets2[i].addToArray()
     }
   }else{
     for (let i = 0; i < paintAssets2.length; i++) {
       paintAssets2[i].setItem()
-      paintAssets2[i].addToArray()
+      // paintAssets2[i].addToArray()
     }
   }
 
   for (let i = 0; i < socialAssets2.length; i++) {
     socialAssets2[i].setItem()
-    socialAssets2[i].addToArray()
+    // socialAssets2[i].addToArray()
   }
 
   for (let i = 0; i < flower_B_Assets2.length; i++) {
     flower_B_Assets2[i].setItem()
-    flower_B_Assets2[i].addToArray()
+    // flower_B_Assets2[i].addToArray()
   }
 
   let flower_F_Arraysplit = flower_F_Assets2.length > 6 ? flower_F_Assets2.length-4 : flower_F_Assets2.length;
@@ -1290,20 +1298,20 @@ function standardLayer2() {
   if (comp.name === 'dominant' || comp.name === 'lowDensity') {
     for (let i = 0; i < flower_F_Arraysplit; i++) {
       flower_F_Assets2[i].setItem()
-      flower_F_Assets2[i].addToArray()
+      // flower_F_Assets2[i].addToArray()
     }
     for (let i = 0; i < flowerArraysplit; i++) {
       flowerAssets2[i].setItem()
-      flowerAssets2[i].addToArray()
+      // flowerAssets2[i].addToArray()
     }
   }else{
     for (let i = 0; i < flower_F_Assets2.length; i++) {
       flower_F_Assets2[i].setItem()
-      flower_F_Assets2[i].addToArray()
+      // flower_F_Assets2[i].addToArray()
     }
     for (let i = 0; i < flowerAssets2.length; i++) {
       flowerAssets2[i].setItem()
-      flowerAssets2[i].addToArray()
+      // flowerAssets2[i].addToArray()
     }
   }
 
@@ -1319,7 +1327,7 @@ function standardLayer2() {
     }
     for (let i = 0; i < bigFlowerAssets2.length; i++) {
       bigFlowerAssets2[i].setItem()
-      bigFlowerAssets2[i].addToArray()
+      // bigFlowerAssets2[i].addToArray()
     }
     pop()
   }
@@ -1327,26 +1335,26 @@ function standardLayer2() {
   if (comp.name === 'dominant' || comp.name === 'lowDensity') {
     for (let i = flower_F_Arraysplit; i < flower_F_Assets2.length; i++) {
       flower_F_Assets2[i].setItem()
-      flower_F_Assets2[i].addToArray()
+      // flower_F_Assets2[i].addToArray()
     }
     for (let i = flowerArraysplit; i < flowerAssets2.length; i++) {
       flowerAssets2[i].setItem()
-      flowerAssets2[i].addToArray()
+      // flowerAssets2[i].addToArray()
     }
     for (let i = paintArraysplit; i < paintAssets2.length; i++) {
       paintAssets2[i].setItem()
-      paintAssets2[i].addToArray()
+      // paintAssets2[i].addToArray()
     }
   }
 
   for (let i = 0; i < blackRoseAssets2.length; i++) {
     blackRoseAssets2[i].setItem()
-    blackRoseAssets2[i].addToArray()
+    // blackRoseAssets2[i].addToArray()
   }
 
   for (let i = 0; i < butterflyAssets2.length; i++) {
     butterflyAssets2[i].setItem()
-    butterflyAssets2[i].addToArray()
+    // butterflyAssets2[i].addToArray()
   }
 
   if (ovTex < .3) {
@@ -1357,7 +1365,7 @@ function standardLayer2() {
 
   for (let i = 0; i < overTopAssets2.length; i++) {
     overTopAssets2[i].setItem()
-    overTopAssets2[i].addToArray()
+    // overTopAssets2[i].addToArray()
   }
 }
 
@@ -1374,7 +1382,7 @@ function placeSocials(comp) {
     blendMode(bMode)
     socialAssets2.push(new PlaceAsset(imgId,pElPos,width/imgDiv,height/imgDiv/aspRatio))
     //socialAssets2[i].setItem()
-    socialAssets2[i].addToArray()
+    // socialAssets2[i].addToArray()
   }
 }
 
@@ -1388,8 +1396,8 @@ function placeButterflies(comp) {
     let bMode  = BLEND // OVERLAY;
     blendMode(bMode)
     butterflyAssets2.push(new PlaceAsset(imgId,pElPos,width/imgDiv,height/imgDiv/aspRatio))
-    // butterflyAssets2[i].setItem()
-    butterflyAssets2[i].addToArray()
+    butterflyAssets2[i].setItem()
+    // butterflyAssets2[i].addToArray()
   }
 }
 
@@ -1408,8 +1416,8 @@ function placeOverTop(comp) {
     let bMode  = BLEND // OVERLAY;
     blendMode(bMode)
     overTopAssets2.push(new PlaceAsset(imgId,pElPos,width/imgDiv,height/imgDiv/aspRatio))
-    // overTopAssets2[i].setItem()
-    overTopAssets2[i].addToArray()
+    overTopAssets2[i].setItem()
+    // overTopAssets2[i].addToArray()
   }
 }
 
@@ -1630,17 +1638,17 @@ function standardDraw2() {
 
   if (comp.name === 'dominant' || comp.name === 'lowDensity') {
     for (let i = 0; i < flower_F_Arraysplit; i++) {
-      flower_F_Assets2[i].addToArray()
+      flower_F_Assets2[i].setItem()
     }
     for (let i = 0; i < flowerArraysplit; i++) {
-      flowerAssets2[i].addToArray()
+      flowerAssets2[i].setItem()
     }
   }else{
     for (let i = 0; i < flower_F_Assets2.length; i++) {
-      flower_F_Assets2[i].addToArray()
+      flower_F_Assets2[i].setItem()
     }
     for (let i = 0; i < flowerAssets2.length; i++) {
-      flowerAssets2[i].addToArray()
+      flowerAssets2[i].()
     }
   }
 
@@ -1655,30 +1663,30 @@ function standardDraw2() {
       rotate(radians(270))
     }
     for (let i = 0; i < bigFlowerAssets2.length; i++) {
-      bigFlowerAssets2[i].addToArray()
+      bigFlowerAssets2[i].setItem()
     }
     pop()
   }
 
   if (comp.name === 'dominant' || comp.name === 'lowDensity') {
     for (let i = flower_F_Arraysplit; i < flower_F_Assets2.length; i++) {
-      flower_F_Assets2[i].addToArray()
+      flower_F_Assets2[i].setItem()
       console.log(i)
     }
     for (let i = flowerArraysplit; i < flowerAssets2.length; i++) {
-      flowerAssets2[i].addToArray()
+      flowerAssets2[i].setItem()
     }
     for (let i = paintArraysplit; i < paintAssets2.length; i++) {
-      paintAssets2[i].addToArray()
+      paintAssets2[i].setItem()
     }
   }
 
   for (let i = 0; i < blackRoseAssets2.length; i++) {
-    blackRoseAssets2[i].addToArray()
+    blackRoseAssets2[i].setItem()
   }
 
   for (let i = 0; i < butterflyAssets2.length; i++) {
-    butterflyAssets2[i].addToArray()
+    butterflyAssets2[i].setItem()
   }
 
   if (ovTex < .3) {
@@ -1688,6 +1696,6 @@ function standardDraw2() {
   }
 
   for (let i = 0; i < overTopAssets2.length; i++) {
-    overTopAssets2[i].addToArray()
+    overTopAssets2[i].setItem()
   }
 }

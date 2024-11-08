@@ -721,8 +721,8 @@ function setup() {
 }
 
 function draw() {
-  drawItIn()
-  activateDynamicAssets()
+  // drawItIn()
+  // activateDynamicAssets()
   // ellipse(0,0,50)
   // ellipse(w(.5),h(.5),50)
   // ellipse(width,height,50)

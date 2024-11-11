@@ -1648,7 +1648,7 @@ function standardDraw2() {
       flower_F_Assets2[i].setItem()
     }
     for (let i = 0; i < flowerAssets2.length; i++) {
-      flowerAssets2[i].()
+      flowerAssets2[i].setItem()
     }
   }
 

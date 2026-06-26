@@ -180,8 +180,9 @@ const depData = {
 	  },
 	],
   // preferredIPFSGateway:"https://black-indirect-dragon-602.mypinata.cloud"
-  preferredIPFSGateway:"https://homage2024.myfilebase.com"
+  // preferredIPFSGateway:"https://homage2024.myfilebase.com"
   // preferredIPFSGateway:"https://ipfs.filebase.io/ipfs/"
+  prefferedIPFSGateway:"https://crucial-sapphire-mammal.myfilebase.com/"
 }
 
 
